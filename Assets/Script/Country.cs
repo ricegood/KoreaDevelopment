@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Country : MonoBehaviour {
-	public static City[] cityList;
+	public City[] cityList;
 	private static int devValue;
 	private static int population;
 	private static int apprRate;
