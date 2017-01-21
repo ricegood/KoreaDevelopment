@@ -45,7 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DevInfo.cs" />
      <Compile Include="Assets\MoneyText.cs" />
+     <Compile Include="Assets\PopulationInfo.cs" />
+     <Compile Include="Assets\RoadInfo.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />
      <Compile Include="Assets\Script\City.cs" />

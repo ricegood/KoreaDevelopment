@@ -17,6 +17,9 @@ public class City : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		save ();
+		population += 1;
+		devValue = (int)(population * 0.2 + investment * 0.4 + roadLv * 0.4)/1000;
+		apprRate = (int)(devValue * 0.5);
 	}
 
 	public int getDevValue(){
@@ -34,9 +37,19 @@ public class City : MonoBehaviour {
 	public int getInvestment(){
 		return investment;
 	}
-
+		
 	public int getRoadLv(){
 		return roadLv;
+	}
+
+	public void invest(){
+		investment += 1000;
+		Character.setMoney (Character.getMoney() - 1000);
+	}
+
+	public void roadUpgrade(){
+		roadLv++;
+		Character.setMoney (Character.getMoney() - 1000);
 	}
 
 	public void save(){
