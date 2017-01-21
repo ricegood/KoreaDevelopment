@@ -21,7 +21,21 @@ public class Util : MonoBehaviour {
 		Character.setOrder (++order);
 		Character.setName (name);
 		Character.setMoney (DEFAULT_MONEY);
-		PlayerPrefs.SetInt ("order", order);
+		Character.save ();
+	}
+
+	public static void setText(Text t, string s){
+		t.text = s;
+	}
+
+	public static string printIntValue(int n){
+		if (n < 1000) {
+			return n.ToString ();
+		}
+		else if(n < 1000000){
+			return (n/1000).ToString() + "." + (n%1000).ToString() + "K" ;
+		}
+		else return (n/1000000).ToString() + "." + (n%1000000).ToString() + "M" ;
 	}
 
 }

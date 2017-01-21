@@ -11,11 +11,47 @@ public class City : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		load ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+		save ();
+	}
+
+	public int getDevValue(){
+		return devValue;
+	}
+
+	public int getPopulation(){
+		return population;
+	}
+
+	public int getApprRate(){
+		return apprRate;
+	}
+
+	public int getInvestment(){
+		return investment;
+	}
+
+	public int getRoadLv(){
+		return roadLv;
+	}
+
+	public void save(){
+		PlayerPrefs.SetInt (myname + "DevValue", devValue);
+		PlayerPrefs.SetInt (myname + "Population", population);
+		PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
+		PlayerPrefs.SetInt (myname + "Investment", investment);
+		PlayerPrefs.SetInt (myname + "RoadLv", roadLv);
+	}
+
+	public void load(){
+		devValue = PlayerPrefs.GetInt (myname + "DevValue");
+		population = PlayerPrefs.GetInt (myname + "Population");
+		apprRate = PlayerPrefs.GetInt (myname + "ApprRate");
+		investment = PlayerPrefs.GetInt (myname + "Investment");
+		roadLv = PlayerPrefs.GetInt (myname + "RoadLv");
 	}
 }

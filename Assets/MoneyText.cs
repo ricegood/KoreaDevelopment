@@ -2,16 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Info : MonoBehaviour {
-	string myText;
+public class MoneyText : MonoBehaviour {
+	private string myText;
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
-		myText = Character.getOrder() + "대\n" + Character.getName ();
+		myText = Util.printIntValue(Character.getMoney());
 		Util.setText (this.GetComponent<Text>(), myText);
 	}
 

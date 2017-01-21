@@ -30,6 +30,18 @@ public class Character : MonoBehaviour {
 		myname = n;
 	}
 
+	public static void save(){
+		PlayerPrefs.SetInt ("order", order);
+		PlayerPrefs.SetInt ("money", money);
+		PlayerPrefs.SetString ("name", myname);
+	}
+
+	public static void load(){
+		order = PlayerPrefs.GetInt ("order");
+		money = PlayerPrefs.GetInt ("money");
+		myname = PlayerPrefs.GetString ("name");
+	}
+
 	// Use this for initialization
 	void Start () {
 		
