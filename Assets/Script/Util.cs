@@ -10,6 +10,7 @@ public class Util : MonoBehaviour {
 
 	void start(){
 		order = PlayerPrefs.GetInt ("order");
+		Screen.SetResolution(900, 1600, true); 
 	}
 
 	public void moveScene(string scene){
