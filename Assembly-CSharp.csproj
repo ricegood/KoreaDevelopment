@@ -57,7 +57,6 @@
      <Compile Include="Assets\Script\PopulationInfo.cs" />
      <Compile Include="Assets\Script\Road.cs" />
      <Compile Include="Assets\Script\RoadInfo.cs" />
-     <Compile Include="Assets\Script\Test.cs" />
      <Compile Include="Assets\Script\Util.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
