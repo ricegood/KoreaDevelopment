@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class Util : MonoBehaviour {
 	private int order;
 
-	private readonly int DEFAULT_MONEY = 1000;
+	private int DEFAULT_MONEY;
 
-	void start(){
+	void Start(){
+		Debug.Log(PlayerPrefs.GetInt ("order"));
 		order = PlayerPrefs.GetInt ("order");
 		Screen.SetResolution(900, 1600, true); 
 	}
@@ -17,12 +18,29 @@ public class Util : MonoBehaviour {
 		SceneManager.LoadScene(scene);
 	}
 
+	public void setLevel(Dropdown d){
+		Character.setLevel (d.value);
+	}
+
 	public void createCharacter(Text text){
+		PlayerPrefs.DeleteAll ();
+
+		switch (Character.getLevel()) {
+		case 0:
+			DEFAULT_MONEY = 5000;
+			break;
+		case 1:
+			DEFAULT_MONEY = 3000;
+			break;
+		case 2:
+			DEFAULT_MONEY = 1000;
+			break;
+		}
+
 		string name = text.text.ToString();
-		Character.setOrder (++order);
+		Character.setOrder (order+1);
 		Character.setName (name);
 		Character.setMoney (DEFAULT_MONEY);
-		Character.save ();
 	}
 
 	public static void setText(Text t, string s){

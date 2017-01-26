@@ -16,7 +16,7 @@ public class Country : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Character.save ();
+		//Character.save ();
 	}
 
 	public void openCityMap(int n){

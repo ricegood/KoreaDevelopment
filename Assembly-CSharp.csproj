@@ -53,6 +53,7 @@
      <Compile Include="Assets\Script\Character.cs" />
      <Compile Include="Assets\Script\City.cs" />
      <Compile Include="Assets\Script\Country.cs" />
+     <Compile Include="Assets\Script\EmptyClass.cs" />
      <Compile Include="Assets\Script\Info.cs" />
      <Compile Include="Assets\Script\Road.cs" />
      <Compile Include="Assets\Script\Util.cs" />

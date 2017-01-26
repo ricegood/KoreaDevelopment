@@ -3,6 +3,7 @@ using System.Collections;
 
 public class City : MonoBehaviour {
 	public string myname;
+	public SpriteRenderer map;
 	private int devValue;
 	private int population;
 	private int apprRate;
@@ -20,6 +21,11 @@ public class City : MonoBehaviour {
 		population += 1;
 		devValue = (int)(population * 0.2 + investment * 0.4 + roadLv * 0.4)/1000;
 		apprRate = (int)(devValue * 0.5);
+		mapColorUpdate (map);
+	}
+
+	public void mapColorUpdate(SpriteRenderer map){
+		map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f, 1f);
 	}
 
 	public int getDevValue(){
