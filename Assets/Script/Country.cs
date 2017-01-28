@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Country : MonoBehaviour {
 	public GameObject map;
-	public GameObject[] cityMapList;
+	public GameObject[] cityList;
 	private static int devValue;
 	private static int population;
 	private static int apprRate;
@@ -21,11 +21,11 @@ public class Country : MonoBehaviour {
 
 	public void openCityMap(int n){
 		map.SetActive (false);
-		cityMapList [n].SetActive (true);
+		cityList [n].SetActive (true);
 	}
 
 	public void closeCityMap(int n){
-		cityMapList [n].SetActive (false);
+		cityList [n].SetActive (false);
 		map.SetActive (true);
 	}
 }
