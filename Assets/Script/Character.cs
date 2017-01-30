@@ -51,6 +51,7 @@ public class Character : MonoBehaviour {
 		PlayerPrefs.SetInt ("level", level);
 	}
 	*/
+
 	public static void load(){
 		order = PlayerPrefs.GetInt ("order");
 		money = PlayerPrefs.GetInt ("money");
