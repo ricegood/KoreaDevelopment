@@ -22,4 +22,8 @@ public class Map : MonoBehaviour {
 
 	}
 
+	public void setType(int n){
+		type = n;
+	}
+
 }

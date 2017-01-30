@@ -3,7 +3,7 @@ using System.Collections;
 
 public class City : MonoBehaviour {
 	public string myname;
-	public SpriteRenderer map;
+
 	public int devValue;
 	public int population;
 	private int apprRate;
@@ -21,7 +21,20 @@ public class City : MonoBehaviour {
 		population += 1;
 		devValue = (int)(population * 0.4 + investment * 0.4 + roadLv * 0.4)/250;
 		apprRate = (int)(devValue * 0.5);
-		mapColorUpdate (map, Map.type);
+		mapColorUpdate (this.GetComponent<SpriteRenderer>(), Map.type);
+
+		// Click(touch) Event
+		if (Input.GetMouseButtonDown (0)) {
+			Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
+			if(hitInfo.transform.gameObject.name == myname)
+			{
+				Debug.Log( hitInfo.transform.gameObject.name + " Clicked" );
+				// Here you can check hitInfo to see which collider has been hit, and act appropriately.
+			}
+		}
+
 	}
 
 	public void mapColorUpdate(SpriteRenderer map, int type){
