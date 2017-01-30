@@ -33,4 +33,12 @@ public class CityDetail : MonoBehaviour {
 	public void setCity(City city){
 		thisCity = city;
 	}
+
+	public void increaseTaxRate(){
+		thisCity.increaseTaxRate ();
+	}
+
+	public void decreaseTaxRate(){
+		thisCity.decreaseTaxRate ();
+	}
 }

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Country : MonoBehaviour {
 	public GameObject map;
-	public GameObject moneyPanel;
-	public GameObject[] cityList;
 
 	private static int money;
 
