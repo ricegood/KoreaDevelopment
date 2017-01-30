@@ -113,14 +113,14 @@ public class City : MonoBehaviour {
 		// get money every 1 month.
 		if(savedMonth != myTime.getMonth()){
 			savedMonth = myTime.getMonth ();
-			Country.setMoney (Country.getMoney () + (int)(((float)taxRate/100) * devValue*10));
+			Country.setMoney (Country.getMoney () + (int)(((float)taxRate/100) * devValue*100));
 		}
-
+	
 		// Value Setting Functions
 		setEnvironment ((int)(devValue * 0.5 - resource * 0.5));
+		setApprRate (devValue,taxRate);
 		population += 1;
 		devValue = (int)(population * 0.1 + investment * 0.9)/50;
-		apprRate = (int)(devValue * 0.5);
 
 		save ();
 
@@ -146,7 +146,10 @@ public class City : MonoBehaviour {
 			map.color = new Color((float)(1-devValue*0.001), 1f, (float)(1-devValue*0.001), 1f);
 			break;
 		case Map.INDUSTRY:
-			map.color = new Color((float)(1-investment*0.0001), (float)(1-investment*0.0001), 1f, 1f);
+			// modify [ 4000 , 0.000025 ] values to change limitation.
+			if (investment > 40000)
+				map.color = new Color (0.3f, 0.3f, 1f, 1f);
+			else map.color = new Color(1-(float)(investment*0.000025)*0.7f, 1-(float)(investment*0.000025)*0.7f, 1f, 1f);
 			break;
 		case Map.RESOURCE:
 			map.color = new Color(1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1f);
@@ -254,12 +257,32 @@ public class City : MonoBehaviour {
 		}
 	}
 
+	public void setApprRate(int devValue, int taxRate){
+		int result;
+
+		if (taxRate < 20) {
+			result = (int)((devValue * 0.5) - taxRate);
+		} else{
+			result = (int)((devValue * 0.5) - 20 - (taxRate - 20) / 0.5);
+		}
+
+		if (result < 0) {
+			// ** Game Over !!!!! **
+			apprRate = 0;
+		} else if (result > 100) {
+			apprRate = 100;
+		} else{
+			apprRate = result;
+			PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
+		}
+	}
+
 
 
 	public void save(){
 		PlayerPrefs.SetInt (myname + "DevValue", devValue);
 		PlayerPrefs.SetInt (myname + "Population", population);
-		PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
+		//PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
 		// PlayerPrefs.SetInt (myname + "Investment", investment);
 		PlayerPrefs.SetInt (myname + "Resource", resource);
 		// PlayerPrefs.SetInt (myname + "Environment", environment);
