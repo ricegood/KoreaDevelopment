@@ -3,14 +3,17 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class City : MonoBehaviour {
+	private const int INVESTMONEY = 1000;
+
 	public string myname;
 	public string titleName;
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
+	public GameObject moneyPanel;
 
 	private int devValue;
 	private int population;
-	private int apprRate;
+	private int apprRate = 50;	// initial value
 	private int investment;
 
 	private int resource;
@@ -40,7 +43,7 @@ public class City : MonoBehaviour {
 			Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
-			if (hitInfo && hitInfo.transform.gameObject.name == myname) {
+			if (!Util.popup && hitInfo && hitInfo.transform.gameObject.name == myname) {
 				touchEvent ();
 
 			}
@@ -54,13 +57,13 @@ public class City : MonoBehaviour {
 			map.color = new Color((float)(1-devValue*0.1), 1f, (float)(1-devValue*0.1), 1f);
 			break;
 		case Map.INDUSTRY:
-			map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f, 1f);
+			map.color = new Color((float)(1-investment*0.1), (float)(1-investment*0.1), 1f, 1f);
 			break;
 		case Map.RESOURCE:
-			map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f);
+			map.color = new Color((float)(1-resource*0.1), (float)(1-resource*0.1), (float)(1-resource*0.1), 1f);
 			break;
 		case Map.ENVIRONMENT:
-			map.color = new Color(1f, (float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f);
+			map.color = new Color(1f, (float)(1-environment*0.1), (float)(1-environment*0.1), 1f);
 			break;
 		case Map.SUPPORT:
 			break;
@@ -78,10 +81,13 @@ public class City : MonoBehaviour {
 			detailPanel.SetActive(true);
 			break;
 		case Map.INDUSTRY:
+			// investment (take 10 minutes)
+			invest();
 			break;
 		case Map.RESOURCE:
 			break;
 		case Map.ENVIRONMENT:
+			// nothing
 			break;
 		case Map.SUPPORT:
 			break;
@@ -125,15 +131,20 @@ public class City : MonoBehaviour {
 	}
 		
 	public void invest(){
-		investment += 1000;
-		Character.setMoney (Character.getMoney() - 1000);
+		if (Country.setMoney (Country.getMoney () - INVESTMONEY)) {
+			investment += INVESTMONEY;
+			PlayerPrefs.SetInt (myname + "Investment", investment);
+		} else {
+			Util.popup = true;
+			moneyPanel.SetActive (true);
+		}
 	}
 
 	public void save(){
 		PlayerPrefs.SetInt (myname + "DevValue", devValue);
 		PlayerPrefs.SetInt (myname + "Population", population);
 		PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
-		PlayerPrefs.SetInt (myname + "Investment", investment);
+		// PlayerPrefs.SetInt (myname + "Investment", investment);
 		PlayerPrefs.SetInt (myname + "Resource", resource);
 		PlayerPrefs.SetInt (myname + "Environment", environment);
 		PlayerPrefs.SetInt (myname + "TaxRate", taxRate);

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Character : MonoBehaviour {
 	private static int order;
-	private static int money;
+//	private static int money;
 	private static string myname;
 	private static int level;
 
@@ -14,10 +14,11 @@ public class Character : MonoBehaviour {
 	public static int getOrder(){
 		return order;
 	}
-
+	/*
 	public static int getMoney(){
 		return money;
 	}
+	*/
 
 	public static string getName(){
 		return myname;
@@ -32,11 +33,18 @@ public class Character : MonoBehaviour {
 		order = n;
 		PlayerPrefs.SetInt ("order", order);
 	}
-
-	public static void setMoney(int n){
-		money = n;
-		PlayerPrefs.SetInt ("money", money);
+	/*
+	public static bool setMoney(int n){
+		if (n >= 0) {
+			money = n;
+			PlayerPrefs.SetInt ("money", money);
+			return true;
+		} else {
+			moneyPanel.SetActive (true);
+			return false;
+		}
 	}
+	*/
 
 	public static void setName(string n){
 		myname = n;
@@ -54,7 +62,7 @@ public class Character : MonoBehaviour {
 
 	public static void load(){
 		order = PlayerPrefs.GetInt ("order");
-		money = PlayerPrefs.GetInt ("money");
+		//money = PlayerPrefs.GetInt ("money");
 		myname = PlayerPrefs.GetString ("name");
 		level = PlayerPrefs.GetInt ("level");
 	}

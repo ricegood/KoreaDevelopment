@@ -3,7 +3,11 @@ using System.Collections;
 
 public class Country : MonoBehaviour {
 	public GameObject map;
+	public GameObject moneyPanel;
 	public GameObject[] cityList;
+
+	private static int money;
+
 	private static int devValue;
 	private static int population;
 	private static int apprRate;
@@ -11,7 +15,7 @@ public class Country : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Character.load ();
+		load ();
 	}
 	
 	// Update is called once per frame
@@ -19,13 +23,23 @@ public class Country : MonoBehaviour {
 		//Character.save ();
 	}
 
-	public void openCityMap(int n){
-		map.SetActive (false);
-		cityList [n].SetActive (true);
+	public static int getMoney(){
+		return money;
 	}
 
-	public void closeCityMap(int n){
-		cityList [n].SetActive (false);
-		map.SetActive (true);
+	public static bool setMoney(int n){
+		if (n >= 0) {
+			money = n;
+			PlayerPrefs.SetInt ("money", money);
+			return true;
+		} else {
+			return false;
+		}
 	}
+
+	private static void load(){
+		Character.load ();
+		money = PlayerPrefs.GetInt ("money");
+	}
+
 }

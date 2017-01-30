@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Util : MonoBehaviour {
 	private int order;
+	public static bool popup = false;
 
 	private int DEFAULT_MONEY;
 
@@ -27,24 +28,28 @@ public class Util : MonoBehaviour {
 
 		switch (Character.getLevel()) {
 		case 0:
-			DEFAULT_MONEY = 5000;
+			DEFAULT_MONEY = 10000;
 			break;
 		case 1:
-			DEFAULT_MONEY = 3000;
+			DEFAULT_MONEY = 5000;
 			break;
 		case 2:
-			DEFAULT_MONEY = 1000;
+			DEFAULT_MONEY = 3000;
 			break;
 		}
 
 		string name = text.text.ToString();
 		Character.setOrder (order+1);
 		Character.setName (name);
-		Character.setMoney (DEFAULT_MONEY);
+		Country.setMoney (DEFAULT_MONEY);
 	}
 
 	public static void setText(Text t, string s){
 		t.text = s;
+	}
+
+	public void setPopup(bool b){
+		popup = b;
 	}
 
 	public static string printIntValue(int n){
