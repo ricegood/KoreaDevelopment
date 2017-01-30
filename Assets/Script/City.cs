@@ -4,6 +4,7 @@ using System.Collections;
 
 public class City : MonoBehaviour {
 	public string myname;
+	public string titleName;
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 
@@ -89,6 +90,10 @@ public class City : MonoBehaviour {
 
 	public string getName(){
 		return myname;
+	}
+
+	public string getTitleName(){
+		return titleName;
 	}
 
 	public int getDevValue(){

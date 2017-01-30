@@ -45,20 +45,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CityDetail.cs" />
      <Compile Include="Assets\Resolution\Game\GameMgr.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />
      <Compile Include="Assets\Script\City.cs" />
-     <Compile Include="Assets\Script\Constant.cs" />
+     <Compile Include="Assets\Script\CityDetail.cs" />
      <Compile Include="Assets\Script\Country.cs" />
-     <Compile Include="Assets\Script\DevInfo.cs" />
      <Compile Include="Assets\Script\Info.cs" />
      <Compile Include="Assets\Script\Map.cs" />
      <Compile Include="Assets\Script\MoneyText.cs" />
-     <Compile Include="Assets\Script\PopulationInfo.cs" />
-     <Compile Include="Assets\Script\Road.cs" />
-     <Compile Include="Assets\Script\RoadInfo.cs" />
      <Compile Include="Assets\Script\Util.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
