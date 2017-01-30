@@ -4,8 +4,8 @@ using System.Collections;
 public class City : MonoBehaviour {
 	public string myname;
 	public SpriteRenderer map;
-	private int devValue;
-	private int population;
+	public int devValue;
+	public int population;
 	private int apprRate;
 	private int investment;
 	private int roadLv;
@@ -19,13 +19,29 @@ public class City : MonoBehaviour {
 	void Update () {
 		save ();
 		population += 1;
-		devValue = (int)(population * 0.2 + investment * 0.4 + roadLv * 0.4)/1000;
+		devValue = (int)(population * 0.4 + investment * 0.4 + roadLv * 0.4)/250;
 		apprRate = (int)(devValue * 0.5);
-		mapColorUpdate (map);
+		mapColorUpdate (map, Map.type);
 	}
 
-	public void mapColorUpdate(SpriteRenderer map){
-		map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f, 1f);
+	public void mapColorUpdate(SpriteRenderer map, int type){
+		switch (type) {
+		case Map.DEFAULT:
+			map.color = new Color((float)(1-devValue*0.1), 1f, (float)(1-devValue*0.1), 1f);
+			break;
+		case Map.INDUSTRY:
+			map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f, 1f);
+			break;
+		case Map.RESOURCE:
+			map.color = new Color((float)(1-devValue*0.1), (float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f);
+			break;
+		case Map.ENVIRONMENT:
+			map.color = new Color(1f, (float)(1-devValue*0.1), (float)(1-devValue*0.1), 1f);
+			break;
+		case Map.SUPPORT:
+			break;
+		}
+
 	}
 
 	public int getDevValue(){
