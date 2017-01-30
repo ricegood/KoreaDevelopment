@@ -28,9 +28,8 @@ public class City : MonoBehaviour {
 			Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
-			if(hitInfo.transform.gameObject.name == myname)
-			{
-				Debug.Log( hitInfo.transform.gameObject.name + " Clicked" );
+			if (hitInfo && hitInfo.transform.gameObject.name == myname) {
+				Debug.Log (hitInfo.transform.gameObject.name + " Clicked");
 				// Here you can check hitInfo to see which collider has been hit, and act appropriately.
 			}
 		}

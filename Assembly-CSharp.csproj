@@ -45,7 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Map.cs" />
      <Compile Include="Assets\Resolution\Game\GameMgr.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />
@@ -54,6 +53,7 @@
      <Compile Include="Assets\Script\Country.cs" />
      <Compile Include="Assets\Script\DevInfo.cs" />
      <Compile Include="Assets\Script\Info.cs" />
+     <Compile Include="Assets\Script\Map.cs" />
      <Compile Include="Assets\Script\MoneyText.cs" />
      <Compile Include="Assets\Script\PopulationInfo.cs" />
      <Compile Include="Assets\Script\Road.cs" />
