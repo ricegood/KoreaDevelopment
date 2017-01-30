@@ -149,10 +149,10 @@ public class City : MonoBehaviour {
 			map.color = new Color((float)(1-investment*0.0001), (float)(1-investment*0.0001), 1f, 1f);
 			break;
 		case Map.RESOURCE:
-			map.color = new Color((float)(1-resource*0.1), (float)(1-resource*0.1), (float)(1-resource*0.1), 1f);
+			map.color = new Color((float)((float)resource/100), (float)((float)resource/100), (float)((float)resource/100), 1f);
 			break;
 		case Map.ENVIRONMENT:
-			map.color = new Color(1f, (float)(1-environment*0.1), (float)(1-environment*0.1), 1f);
+			map.color = new Color(1f, (float)(1-environment*0.01), (float)(1-environment*0.01), 1f);
 			break;
 		case Map.SUPPORT:
 			break;
