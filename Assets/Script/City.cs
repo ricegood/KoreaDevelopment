@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class City : MonoBehaviour {
 	public string myname;
+	public SpriteRenderer map; 
+	public GameObject detailPanel;
 
-	public int devValue;
-	public int population;
+	private int devValue;
+	private int population;
 	private int apprRate;
 	private int investment;
-	private int roadLv;
+
+	private int resource;
+	private int environment;
+	private int taxRate;
+
 
 	// Use this for initialization
 	void Start () {
@@ -17,9 +24,13 @@ public class City : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (detailPanel.activeSelf)
+			this.GetComponent<PolygonCollider2D> ().enabled = false;
+		else this.GetComponent<PolygonCollider2D> ().enabled = true;
+
 		save ();
 		population += 1;
-		devValue = (int)(population * 0.4 + investment * 0.4 + roadLv * 0.4)/250;
+		devValue = (int)(population * 0.4 + investment * 0.4)/250;
 		apprRate = (int)(devValue * 0.5);
 		mapColorUpdate (this.GetComponent<SpriteRenderer>(), Map.type);
 
@@ -29,8 +40,8 @@ public class City : MonoBehaviour {
 			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
 			if (hitInfo && hitInfo.transform.gameObject.name == myname) {
-				Debug.Log (hitInfo.transform.gameObject.name + " Clicked");
-				// Here you can check hitInfo to see which collider has been hit, and act appropriately.
+				touchEvent ();
+
 			}
 		}
 
@@ -56,6 +67,30 @@ public class City : MonoBehaviour {
 
 	}
 
+	public void touchEvent(){
+		switch (Map.type) {
+		case Map.DEFAULT:
+			// Open the Detail Panel
+			detailPanel.GetComponent<CityDetail>().setCity(this.GetComponent<City>());
+			detailPanel.GetComponent<CityDetail>().imageUpdate ();
+			detailPanel.GetComponent<CityDetail>().textUpdate ();
+			detailPanel.SetActive(true);
+			break;
+		case Map.INDUSTRY:
+			break;
+		case Map.RESOURCE:
+			break;
+		case Map.ENVIRONMENT:
+			break;
+		case Map.SUPPORT:
+			break;
+		}
+	}
+
+	public string getName(){
+		return myname;
+	}
+
 	public int getDevValue(){
 		return devValue;
 	}
@@ -71,18 +106,21 @@ public class City : MonoBehaviour {
 	public int getInvestment(){
 		return investment;
 	}
-		
-	public int getRoadLv(){
-		return roadLv;
+
+	public int getResource(){
+		return resource;
 	}
 
+	public int getEnvironment(){
+		return environment;
+	}
+
+	public int getTaxRate(){
+		return taxRate;
+	}
+		
 	public void invest(){
 		investment += 1000;
-		Character.setMoney (Character.getMoney() - 1000);
-	}
-
-	public void roadUpgrade(){
-		roadLv++;
 		Character.setMoney (Character.getMoney() - 1000);
 	}
 
@@ -91,7 +129,9 @@ public class City : MonoBehaviour {
 		PlayerPrefs.SetInt (myname + "Population", population);
 		PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
 		PlayerPrefs.SetInt (myname + "Investment", investment);
-		PlayerPrefs.SetInt (myname + "RoadLv", roadLv);
+		PlayerPrefs.SetInt (myname + "Resource", resource);
+		PlayerPrefs.SetInt (myname + "Environment", environment);
+		PlayerPrefs.SetInt (myname + "TaxRate", taxRate);
 	}
 
 	public void load(){
@@ -99,6 +139,8 @@ public class City : MonoBehaviour {
 		population = PlayerPrefs.GetInt (myname + "Population");
 		apprRate = PlayerPrefs.GetInt (myname + "ApprRate");
 		investment = PlayerPrefs.GetInt (myname + "Investment");
-		roadLv = PlayerPrefs.GetInt (myname + "RoadLv");
+		resource = PlayerPrefs.GetInt (myname + "Resource");
+		environment = PlayerPrefs.GetInt (myname + "Environment");
+		taxRate = PlayerPrefs.GetInt (myname + "TaxRate");
 	}
 }
