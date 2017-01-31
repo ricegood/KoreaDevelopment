@@ -5,6 +5,7 @@ using System.Collections;
 public class Map : MonoBehaviour {
 	public Image[] mapButton;
 	public Text[] mapButtonText;
+	public GameObject roadButton;
 
 	public const int DEFAULT = 0;
 	public const int INDUSTRY = 1;
@@ -40,6 +41,11 @@ public class Map : MonoBehaviour {
 
 		mapButton [type].color = black;
 		mapButtonText [type].color = white;
+
+		if (type == 0)
+			roadButton.SetActive (true);
+		else
+			roadButton.SetActive (false);
 	}
 
 }

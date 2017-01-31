@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Popup : MonoBehaviour {
-	public GameObject moneyPanel;
+public class RoadButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		moneyPanel = GameObject.Find("moneyPanel");
 	
 	}
 	

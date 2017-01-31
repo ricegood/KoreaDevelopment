@@ -45,8 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Popup.cs" />
      <Compile Include="Assets\Resolution\Game\GameMgr.cs" />
+     <Compile Include="Assets\Road.cs" />
+     <Compile Include="Assets\RoadButton.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />
      <Compile Include="Assets\Script\City.cs" />
