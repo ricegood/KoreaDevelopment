@@ -43,13 +43,8 @@ public class myTime : MonoBehaviour {
 		PlayerPrefs.SetString ("playTime", now.ToString());
 	}
 	private void load(){
-		now = GetFloat(PlayerPrefs.GetString ("playTime"), 0.0f);
+		now = Util.GetFloat(PlayerPrefs.GetString ("playTime"), 0.0f);
 	}
 
-	private float GetFloat(string stringValue, float defaultValue)
-	{
-		float result = defaultValue;
-		float.TryParse(stringValue, out result);
-		return result;
-	}
+
 }

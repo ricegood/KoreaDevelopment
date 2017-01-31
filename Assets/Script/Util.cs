@@ -62,4 +62,11 @@ public class Util : MonoBehaviour {
 		else return (n/1000000).ToString() + "." + (n%1000000).ToString() + "M" ;
 	}
 
+	public static float GetFloat(string stringValue, float defaultValue)
+	{
+		float result = defaultValue;
+		float.TryParse(stringValue, out result);
+		return result;
+	}
+
 }

@@ -4,11 +4,14 @@ using System.Collections;
 
 public class City : MonoBehaviour {
 	private const int INVESTMONEY = 1000;
+	private const int MININGMONEY = 5000;
+	private const int MININGPROFIT = 5000; // per 1t.
+	private const int MININGTIME = 10; // required time for mining (sec)
 
 	public string myname;
 	public string titleName;
 	public int initDevValue; // initial GDP
-	public int initResource; // initial resource
+	public float initResource; // initial resource
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 	public GameObject moneyPanel;
@@ -17,11 +20,15 @@ public class City : MonoBehaviour {
 	private int population = 0; // initial value
 	private int apprRate = 50;	// 0~100 (%) initial value
 	private int investment = 0; // initial value
-	private int resource;		// unit : [t]
+	private float resource;		// unit : [t]
 	private int environment = 0;
 	private int taxRate = 10;	// GDP * taxRate/100
 
+	private bool isMining;
+	private float miningEndTime;
+
 	private int savedMonth;
+
 
 
 	// Use this for initialization
@@ -40,7 +47,7 @@ public class City : MonoBehaviour {
 			savedMonth = myTime.getMonth ();
 			Country.setMoney (Country.getMoney () + (int)(((float)taxRate/100) * devValue*100));
 		}
-	
+
 		// Value Setting Functions
 		setEnvironment ((int)(devValue * 0.5 - resource * 0.5));
 		setApprRate (devValue,taxRate);
@@ -48,6 +55,15 @@ public class City : MonoBehaviour {
 		devValue = (int)(population * 0.1 + investment * 0.9)/50;
 
 		save ();
+
+		// Check the mining
+		if(isMining && (myTime.getNow() > miningEndTime)){
+			isMining = false;
+			PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
+
+			// get profit
+			Country.setMoney (Country.getMoney () + (int)((initResource * 0.1f) * MININGPROFIT));
+		}
 
 		// Map Color Update
 		mapColorUpdate (this.GetComponent<SpriteRenderer>(), Map.type);
@@ -72,12 +88,12 @@ public class City : MonoBehaviour {
 			break;
 		case Map.INDUSTRY:
 			// modify [ 4000 , 0.000025 ] values to change limitation.
-			if (investment > 40000)
-				map.color = new Color (0.3f, 0.3f, 1f, 1f);
+			if (investment > 40000) map.color = new Color (0.3f, 0.3f, 1f, 1f);
 			else map.color = new Color(1-(float)(investment*0.000025)*0.7f, 1-(float)(investment*0.000025)*0.7f, 1f, 1f);
 			break;
 		case Map.RESOURCE:
-			map.color = new Color(1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1f);
+			if(isMining) map.color = new Color (1f, 0.55f, 0.55f, 1f);
+			else map.color = new Color(1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1f);
 			break;
 		case Map.ENVIRONMENT:
 			map.color = new Color(1f, (float)(1-environment*0.01), (float)(1-environment*0.01), 1f);
@@ -139,7 +155,7 @@ public class City : MonoBehaviour {
 		return investment;
 	}
 
-	public int getResource(){
+	public float getResource(){
 		return resource;
 	}
 
@@ -176,7 +192,30 @@ public class City : MonoBehaviour {
 	}
 
 	public void mining(){
-		
+		if (!isMining) {
+			if (Country.setMoney (Country.getMoney () - MININGMONEY)) {
+				if (resource > 0) {
+					// have resource
+					resource -= initResource * 0.1f;
+					isMining = true;
+					PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
+					miningEndTime = myTime.getNow () + MININGTIME;
+					PlayerPrefs.SetString (myname + "MiningEndTime", miningEndTime.ToString ());
+					if (resource < 0)
+						resource = 0;
+				} else {
+					// no resource
+					Debug.Log ("resource 0!");
+				}
+			} else {
+				// no money
+				Util.popup = true;
+				moneyPanel.SetActive (true);
+			}
+		} else {
+			// already mining
+			Debug.Log("Already Mining.");
+		}
 	}
 
 	public void setEnvironment(int n){
@@ -217,7 +256,7 @@ public class City : MonoBehaviour {
 		PlayerPrefs.SetInt (myname + "Population", population);
 		//PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
 		// PlayerPrefs.SetInt (myname + "Investment", investment);
-		PlayerPrefs.SetInt (myname + "Resource", resource);
+		PlayerPrefs.SetString (myname + "Resource", resource.ToString());
 		// PlayerPrefs.SetInt (myname + "Environment", environment);
 		// PlayerPrefs.SetInt (myname + "TaxRate", taxRate);
 	}
@@ -232,10 +271,13 @@ public class City : MonoBehaviour {
 		if(PlayerPrefs.HasKey(myname + "Investment"))
 			investment = PlayerPrefs.GetInt (myname + "Investment");
 		if(PlayerPrefs.HasKey(myname + "Resource"))
-			resource = PlayerPrefs.GetInt (myname + "Resource");
+			resource = Util.GetFloat(PlayerPrefs.GetString (myname + "Resource"), 0.0f);
 		if(PlayerPrefs.HasKey(myname + "Environment"))
 			environment = PlayerPrefs.GetInt (myname + "Environment");
 		if(PlayerPrefs.HasKey(myname + "TaxRate"))
 			taxRate = PlayerPrefs.GetInt (myname + "TaxRate");
+		
+		isMining = (PlayerPrefs.GetString (myname + "IsMining") == "True");
+		miningEndTime = Util.GetFloat (PlayerPrefs.GetString (myname + "MiningEndTime"), 0.0f);
 	}
 }
