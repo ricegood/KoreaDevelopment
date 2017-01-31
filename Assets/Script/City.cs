@@ -7,6 +7,8 @@ public class City : MonoBehaviour {
 
 	public string myname;
 	public string titleName;
+	public int initDevValue; // initial GDP
+	public int initResource; // initial resource
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 	public GameObject moneyPanel;
@@ -24,85 +26,8 @@ public class City : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// Initialize (* 나중에는 상수로 해야 할듯.)
-		switch (myname) {
-		case "Hambuk":
-			devValue = 30;
-			resource = 100;
-			break;
-		case "Hamnam":
-			devValue = 30;
-			resource = 10;
-			break;
-		case "Yanggangdo":
-			devValue = 30;
-			resource = 50;
-			break;
-		case "Jagangdo":
-			devValue = 30;
-			resource = 30;
-			break;
-		case "Pyeongbuk":
-			devValue = 30;
-			resource = 100;
-			break;
-		case "Pyeongnam":
-			devValue = 40;
-			resource = 70;
-			break;
-		case "Hwangbuk":
-			devValue = 30;
-			resource = 100;
-			break;
-		case "Hwangnam":
-			devValue = 30;
-			resource = 10;
-			break;
-		case "Kangwondo":
-			devValue = 30;
-			resource = 100;
-			break;
-		case "Gyeonggido":
-			devValue = 80;
-			resource = 5;
-			break;
-		case "Chungbuk":
-			devValue = 50;
-			resource = 10;
-			break;
-		case "Chungnam":
-			devValue = 50;
-			resource = 30;
-			break;
-		case "Jeonbuk":
-			devValue = 50;
-			resource = 30;
-			break;
-		case "Jeonnam":
-			devValue = 50;
-			resource = 30;
-			break;
-		case "Kyeongbuk":
-			devValue = 50;
-			resource = 30;
-			break;
-		case "Kyeongnam":
-			devValue = 60;
-			resource = 30;
-			break;
-		case "Jejudo":
-			devValue = 50;
-			resource = 30;
-			break;
-		case "Ulleungdo":
-			devValue = 40;
-			resource = 40;
-			break;
-		case "Dokdo":
-			devValue = 10;
-			resource = 90;
-			break;
-		}
+		devValue = initDevValue;
+		resource = initResource;
 		savedMonth = myTime.getMonth ();
 		load ();
 
@@ -171,12 +96,16 @@ public class City : MonoBehaviour {
 			detailPanel.GetComponent<CityDetail>().imageUpdate ();
 			detailPanel.GetComponent<CityDetail>().textUpdate ();
 			detailPanel.SetActive(true);
+
+			// if the road button is clicked -> create road.  (take 10 minutes)
 			break;
 		case Map.INDUSTRY:
-			// investment (take 10 minutes)
+			// investment
 			invest();
 			break;
 		case Map.RESOURCE:
+			// mining (take 5 minutes)
+			mining();
 			break;
 		case Map.ENVIRONMENT:
 			// nothing
@@ -244,6 +173,10 @@ public class City : MonoBehaviour {
 			Util.popup = true;
 			moneyPanel.SetActive (true);
 		}
+	}
+
+	public void mining(){
+		
 	}
 
 	public void setEnvironment(int n){
