@@ -15,6 +15,7 @@ public class City : MonoBehaviour {
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 	public GameObject moneyPanel;
+	public GameObject[] roadList;
 
 	private int devValue;		// GDP
 	private int population = 0; // initial value
@@ -27,12 +28,14 @@ public class City : MonoBehaviour {
 	private bool isMining;
 	private float miningEndTime;
 
-	private int savedMonth;
+	private bool isRoadClicked;
 
+	private int savedMonth;
 
 
 	// Use this for initialization
 	void Start () {
+		map = this.GetComponent<SpriteRenderer> ();
 		devValue = initDevValue;
 		resource = initResource;
 		savedMonth = myTime.getMonth ();
@@ -66,7 +69,9 @@ public class City : MonoBehaviour {
 		}
 
 		// Map Color Update
-		mapColorUpdate (this.GetComponent<SpriteRenderer>(), Map.type);
+		if (!RoadButton.roadPopup) {
+			mapColorUpdate (Map.type);
+		}
 
 		// Click(touch) Event
 		if (Input.GetMouseButtonDown (0)) {
@@ -81,10 +86,14 @@ public class City : MonoBehaviour {
 
 	}
 
-	public void mapColorUpdate(SpriteRenderer map, int type){
+	public void mapColorUpdate(int type){
 		switch (type) {
 		case Map.DEFAULT:
-			map.color = new Color((float)(1-devValue*0.001), 1f, (float)(1-devValue*0.001), 1f);
+			if (!RoadButton.roadPopup) {
+				map.color = new Color ((float)(1 - devValue * 0.001), 1f, (float)(1 - devValue * 0.001), 1f);
+			} else {
+				map.color = new Color (1f, 1f, 1f, 1f);
+			}
 			break;
 		case Map.INDUSTRY:
 			// modify [ 4000 , 0.000025 ] values to change limitation.
@@ -108,12 +117,37 @@ public class City : MonoBehaviour {
 		switch (Map.type) {
 		case Map.DEFAULT:
 			// Open the Detail Panel
-			detailPanel.GetComponent<CityDetail>().setCity(this.GetComponent<City>());
-			detailPanel.GetComponent<CityDetail>().imageUpdate ();
-			detailPanel.GetComponent<CityDetail>().textUpdate ();
-			detailPanel.SetActive(true);
+			if (!RoadButton.roadPopup) {
+				detailPanel.GetComponent<CityDetail> ().setCity (this.GetComponent<City> ());
+				detailPanel.GetComponent<CityDetail> ().imageUpdate ();
+				detailPanel.GetComponent<CityDetail> ().textUpdate ();
+				detailPanel.SetActive (true);
+			}
 
 			// if the road button is clicked -> create road.  (take 10 minutes)
+			else{
+				// first choice
+				if (!isRoadClicked && !RoadButton.secondChoice) {
+					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
+					RoadButton.secondChoice = true;
+					isRoadClicked = true;
+				}
+
+				// second choice
+				else if(RoadButton.secondChoice && !isRoadClicked){
+					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
+					isRoadClicked = true;
+					RoadButton.openCheckPopup();
+				}
+
+				// double clicked
+				else if(RoadButton.secondChoice && isRoadClicked){
+					// back to original color
+					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 1f);
+					isRoadClicked = false;
+					RoadButton.secondChoice = false;
+				}
+			}
 			break;
 		case Map.INDUSTRY:
 			// investment
