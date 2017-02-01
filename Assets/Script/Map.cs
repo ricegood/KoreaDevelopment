@@ -31,7 +31,7 @@ public class Map : MonoBehaviour {
 		{
 			Debug.Log ("\n" + kv.Key.myname + ": ");
 			for(int i=0; i<kv.Value.Count; i++)
-				Debug.Log(kv.Value+" "); 
+				Debug.Log(kv.Value[i].myname+" "); 
 		}
 	}
 	
@@ -53,11 +53,35 @@ public class Map : MonoBehaviour {
 		else
 			return false;
 	}
+
+	public static Road getRoad(City a, City b){
+		for (int i = 0; i < a.roadList.Length; i++) {
+			if (b == a.roadList [i].GetComponent<Road> ().getAdgacencyCity (a)) {
+				return a.roadList [i].GetComponent<Road> ();
+			}
+		}
+		return null;
+	}
 		
 	public void mapColorUpate(){
 		for(int i=0; i<city.Length; i++){
 			city [i].GetComponent<City> ().mapColorUpdate (type);
 		}
+	}
+
+
+	// 여기 return null?????
+	public static Road getRoad(string cityName1, string cityName2){
+		foreach(KeyValuePair<City, List<City>> kv in linkableGraph) 
+		{
+			if (kv.Key.myname.Equals (cityName1)) {
+				for (int i = 0; i < kv.Value.Count; i++) {
+					if (kv.Value [i].myname.Equals (cityName2))
+						return getRoad (kv.Key, kv.Value [i]);
+				}
+			}
+		}
+		return null;
 	}
 
 	// load graph

@@ -58,6 +58,7 @@
      <Compile Include="Assets\Script\MoneyText.cs" />
      <Compile Include="Assets\Script\Util.cs" />
      <Compile Include="Assets\myTime.cs" />
+     <Compile Include="Assets\openCheckPanel.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

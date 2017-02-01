@@ -17,6 +17,14 @@ public class Road : MonoBehaviour {
 	
 	}
 
+	public string getFirstCityName(){
+		return city[0].titleName;
+	}
+
+	public string getSecondCityName(){
+		return city[1].titleName;
+	}
+
 	public City getAdgacencyCity(City myCity){
 		if (city [0] == myCity)
 			return city [1];

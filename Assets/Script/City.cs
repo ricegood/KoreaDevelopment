@@ -153,7 +153,13 @@ public class City : MonoBehaviour {
 					isRoadClicked = true;
 					openCheckPanel.SetActive(true);
 					secondChoosed = this;
+
 					// => then, choosed list reset when OK button
+					Road thisRoad = Map.getRoad (firstChoosed, secondChoosed);
+					openCheckPanel.SetActive (true);
+					openCheckPanel.GetComponent<openCheckPanel>().setRoad (thisRoad);
+					openCheckPanel.GetComponent<openCheckPanel> ().updateText ();
+
 				}
 
 				// double clicked
