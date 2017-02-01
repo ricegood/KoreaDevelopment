@@ -8,6 +8,7 @@ public class RoadButton : MonoBehaviour {
 
 	public GameObject moneyPanel;
 	public GameObject thisObject;
+	// private static City firstChoosed;
 
 	public static bool roadPopup;
 	public static bool secondChoice;
@@ -26,10 +27,6 @@ public class RoadButton : MonoBehaviour {
 		if (isRoadBuilding) {
 			thisObject.GetComponent<Button> ().interactable = false;
 		}
-	}
-
-	public static void openCheckPopup(){
-		
 	}
 
 	public void setRoadPopup(bool b){

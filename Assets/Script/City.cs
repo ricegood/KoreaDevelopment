@@ -12,9 +12,12 @@ public class City : MonoBehaviour {
 	public string titleName;
 	public int initDevValue; // initial GDP
 	public float initResource; // initial resource
+
+	public Map allMap;
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 	public GameObject moneyPanel;
+	public GameObject openCheckPanel;
 	public GameObject[] roadList;
 
 	private int devValue;		// GDP
@@ -29,6 +32,9 @@ public class City : MonoBehaviour {
 	private float miningEndTime;
 
 	private bool isRoadClicked;
+	public static City firstChoosed;
+	public static City secondChoosed;
+	private bool roadInteract = true;
 
 	private int savedMonth;
 
@@ -71,6 +77,8 @@ public class City : MonoBehaviour {
 		// Map Color Update
 		if (!RoadButton.roadPopup) {
 			mapColorUpdate (Map.type);
+		} else if (RoadButton.secondChoice) {
+			updateEnableCity ();
 		}
 
 		// Click(touch) Event
@@ -91,8 +99,12 @@ public class City : MonoBehaviour {
 		case Map.DEFAULT:
 			if (!RoadButton.roadPopup) {
 				map.color = new Color ((float)(1 - devValue * 0.001), 1f, (float)(1 - devValue * 0.001), 1f);
+			} else if (roadList.Length == 0) {
+				map.color = new Color (1f, 1f, 1f, 0.5f);
+				roadInteract = false;
 			} else {
 				map.color = new Color (1f, 1f, 1f, 1f);
+				roadInteract = true;
 			}
 			break;
 		case Map.INDUSTRY:
@@ -125,19 +137,23 @@ public class City : MonoBehaviour {
 			}
 
 			// if the road button is clicked -> create road.  (take 10 minutes)
-			else{
+			else if(roadInteract){
 				// first choice
 				if (!isRoadClicked && !RoadButton.secondChoice) {
 					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
 					RoadButton.secondChoice = true;
 					isRoadClicked = true;
+					firstChoosed = this;
+					updateEnableCity ();
 				}
 
 				// second choice
 				else if(RoadButton.secondChoice && !isRoadClicked){
 					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
 					isRoadClicked = true;
-					RoadButton.openCheckPopup();
+					openCheckPanel.SetActive(true);
+					secondChoosed = this;
+					// => then, choosed list reset when OK button
 				}
 
 				// double clicked
@@ -146,6 +162,7 @@ public class City : MonoBehaviour {
 					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 1f);
 					isRoadClicked = false;
 					RoadButton.secondChoice = false;
+					allMap.mapColorUpate ();
 				}
 			}
 			break;
@@ -163,6 +180,21 @@ public class City : MonoBehaviour {
 		case Map.SUPPORT:
 			break;
 		}
+	}
+
+	public void updateEnableCity(){
+		if (this != firstChoosed && (Map.isLinked (firstChoosed, this) || !Map.isLinkable (firstChoosed, this))) {
+			map.color = new Color (1f, 1f, 1f, 0.5f);
+			roadInteract = false;
+		}
+	}
+
+	public void setRoadInteract(bool b){
+		roadInteract = b;
+	}
+
+	public void setIsRoadClicked(bool b){
+		isRoadClicked = b;
 	}
 
 	public string getName(){

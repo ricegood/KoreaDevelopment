@@ -15,7 +15,8 @@ public class Map : MonoBehaviour {
 	public const int SUPPORT = 4;
 
 	public GameObject[] city;
-	public Dictionary<City, List<City>> graph = new Dictionary <City, List<City>>();
+	public static Dictionary<City, List<City>> graph = new Dictionary <City, List<City>>();
+	public static Dictionary<City, List<City>> linkableGraph = new Dictionary <City, List<City>>();
 	public static int type;
 
 	private Color black = new Color (0f, 0f, 0f, 1f);
@@ -39,6 +40,20 @@ public class Map : MonoBehaviour {
 
 	}
 
+	public static bool isLinked(City a, City b){
+		if (graph [a].Contains(b))
+			return true;
+		else
+			return false;
+	}
+
+	public static bool isLinkable(City a, City b){
+		if (linkableGraph [a].Contains(b))
+			return true;
+		else
+			return false;
+	}
+		
 	public void mapColorUpate(){
 		for(int i=0; i<city.Length; i++){
 			city [i].GetComponent<City> ().mapColorUpdate (type);
@@ -50,6 +65,7 @@ public class Map : MonoBehaviour {
 		for (int i = 0; i < city.Length; i++) {
 			City thisCity = city [i].GetComponent<City> ();
 			graph.Add (thisCity, new List<City> ());
+			linkableGraph.Add (thisCity, new List<City> ());
 			for (int j = 0; j < thisCity.roadList.Length; j++) {
 				// get roadList[j]
 				Road thisRoad = thisCity.roadList[j].GetComponent<Road>();
@@ -58,6 +74,9 @@ public class Map : MonoBehaviour {
 				if(thisRoad.getCompleted()){
 					graph [thisCity].Add (thisRoad.getAdgacencyCity(thisCity));
 				}
+
+				// always add the city to the LinkableGraph.
+				linkableGraph [thisCity].Add (thisRoad.getAdgacencyCity(thisCity));
 			}
 		}
 	}
@@ -65,6 +84,14 @@ public class Map : MonoBehaviour {
 	// menu button..
 	public void setType(int n){
 		type = n;
+	}
+
+	public void resetIsRoadClicked(){
+		for (int i = 0; i < city.Length; i++) {
+			city [i].GetComponent<City> ().setIsRoadClicked (false);
+			city [i].GetComponent<City> ().setRoadInteract (true);
+		}
+		RoadButton.secondChoice = false;
 	}
 
 	public void setButtonColor(){
