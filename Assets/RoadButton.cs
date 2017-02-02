@@ -8,6 +8,7 @@ public class RoadButton : MonoBehaviour {
 
 	public GameObject moneyPanel;
 	public GameObject thisObject;
+	public Text timeText;
 	// private static City firstChoosed;
 
 	public static bool roadPopup;
@@ -16,6 +17,8 @@ public class RoadButton : MonoBehaviour {
 	public static bool isRoadBuilding;
 	public static float roadBuildingEndTime;
 	public static string buildingRoadName1, buildingRoadName2;
+
+	private static int remainTime;
 
 	// Use this for initialization
 	void Start () {
@@ -31,18 +34,22 @@ public class RoadButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (isRoadBuilding) {
+			remainTime = (int)(roadBuildingEndTime - myTime.getNow ());
+			timeText.text = remainTime + " s";
+		}
+			
 		// Check the road building
 		if(isRoadBuilding && (myTime.getNow() > roadBuildingEndTime)){
 			isRoadBuilding = false;
 			PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString());
 
 			// road completed!
-			Debug.Log(buildingRoadName1 + buildingRoadName2);
 			Road thisRoad = Map.getRoad(buildingRoadName1, buildingRoadName2);
 			thisRoad.setCompleted (true);
 			thisObject.GetComponent<Button> ().interactable = true;
 			Map.addGraph (thisRoad);
+			timeText.text = "";
 		}
 	}
 

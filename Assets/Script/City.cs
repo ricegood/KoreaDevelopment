@@ -37,6 +37,7 @@ public class City : MonoBehaviour {
 	private bool roadInteract = true;
 
 	private int savedMonth;
+	private int treeNumber;
 
 
 	// Use this for initialization
@@ -58,7 +59,7 @@ public class City : MonoBehaviour {
 		}
 
 		// Value Setting Functions
-		setEnvironment ((int)(devValue * 0.5 - resource * 0.5));
+		setEnvironment ((int)(devValue - resource * 0.5) - (int)(treeNumber/1000)*Plant.TREEVALUE);
 		setApprRate (devValue,taxRate);
 		population += 1;
 		devValue = (int)(population * 0.1 + investment * 0.9)/50;
@@ -117,7 +118,7 @@ public class City : MonoBehaviour {
 			else map.color = new Color(1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1f);
 			break;
 		case Map.ENVIRONMENT:
-			map.color = new Color(1f, (float)(1-environment*0.01), (float)(1-environment*0.01), 1f);
+			map.color = new Color(1f, (float)(1-environment*0.003), (float)(1-environment*0.003), 1f);
 			break;
 		case Map.SUPPORT:
 			break;
@@ -301,6 +302,11 @@ public class City : MonoBehaviour {
 		}
 	}
 
+	public void addTreeNum(int n){
+		if(n > 0) treeNumber += n;
+		PlayerPrefs.SetInt (myname + "TreeNumber", treeNumber);
+	}
+
 	public void setApprRate(int devValue, int taxRate){
 		int result;
 
@@ -351,5 +357,6 @@ public class City : MonoBehaviour {
 		
 		isMining = (PlayerPrefs.GetString (myname + "IsMining") == "True");
 		miningEndTime = Util.GetFloat (PlayerPrefs.GetString (myname + "MiningEndTime"), 0.0f);
+		treeNumber = PlayerPrefs.GetInt (myname + "TreeNumber");
 	}
 }

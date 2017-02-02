@@ -7,6 +7,8 @@ public class Map : MonoBehaviour {
 	public Image[] mapButton;
 	public Text[] mapButtonText;
 	public GameObject roadButton;
+	public GameObject plantButton;
+	public GameObject allRoad;
 
 	public const int DEFAULT = 0;
 	public const int INDUSTRY = 1;
@@ -130,10 +132,24 @@ public class Map : MonoBehaviour {
 		mapButton [type].color = black;
 		mapButtonText [type].color = white;
 
-		if (type == 0)
+
+		switch (type) {
+		case DEFAULT:
 			roadButton.SetActive (true);
-		else
+			plantButton.SetActive (false);
+			allRoad.SetActive (true);
+			break;
+		case ENVIRONMENT:
+			plantButton.SetActive (true);
 			roadButton.SetActive (false);
+			allRoad.SetActive (false);
+			break;
+		default:
+			plantButton.SetActive (false);
+			roadButton.SetActive (false);
+			allRoad.SetActive (false);
+			break;
+		}
 	}
 
 }
