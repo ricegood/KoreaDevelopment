@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class myTime : MonoBehaviour {
 	public Text timeText;
@@ -25,6 +26,13 @@ public class myTime : MonoBehaviour {
 		year = ((int)(now / SEC) / 12) + 1;
 		timeText.text = year.ToString() + "년 " + month.ToString() + "월";
 		save ();
+	}
+
+	public void gameClear(){
+		Debug.Log("GAME CLEAR!");
+		Debug.Log ("avgApprRate = " + Country.getAvgApprRate());
+		Debug.Log ("avgDevValue = " + Country.getAvgDevValue());
+		SceneManager.LoadScene("Intro");
 	}
 
 	public static int getYear(){

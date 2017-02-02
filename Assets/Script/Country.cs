@@ -22,7 +22,7 @@ public class Country : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		population = getPopulation (map.city);
+		population = getPop(map.city);
 		avgApprRate = sumApprRate(map.city)/population;
 		avgDevValue = sumDevValue (map.city) / population;
 
@@ -48,6 +48,18 @@ public class Country : MonoBehaviour {
 		}
 	}
 
+	public static int getAvgApprRate(){
+		return avgApprRate;
+	}
+
+	public static int getAvgDevValue(){
+		return avgDevValue;
+	}
+
+	public static int getPopulation(){
+		return population;
+	}
+
 	private void gameOver(){
 		Debug.Log("GAME OVER!!!!");
 		Debug.Log ("avgApprRate = " + avgApprRate);
@@ -55,7 +67,7 @@ public class Country : MonoBehaviour {
 		SceneManager.LoadScene("Intro");
 	}
 
-	private int getPopulation(GameObject[] cityList){
+	private int getPop(GameObject[] cityList){
 		int sum = 0;
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
