@@ -9,6 +9,7 @@ public class Map : MonoBehaviour {
 	public GameObject roadButton;
 	public GameObject plantButton;
 	public GameObject allRoad;
+	public GameObject allApprRate;
 
 	public const int DEFAULT = 0;
 	public const int INDUSTRY = 1;
@@ -138,16 +139,25 @@ public class Map : MonoBehaviour {
 			roadButton.SetActive (true);
 			plantButton.SetActive (false);
 			allRoad.SetActive (true);
+			allApprRate.SetActive (false);
 			break;
 		case ENVIRONMENT:
 			plantButton.SetActive (true);
 			roadButton.SetActive (false);
 			allRoad.SetActive (false);
+			allApprRate.SetActive (false);
+			break;
+		case SUPPORT:
+			plantButton.SetActive (false);
+			roadButton.SetActive (false);
+			allRoad.SetActive (false);
+			allApprRate.SetActive (true);
 			break;
 		default:
 			plantButton.SetActive (false);
 			roadButton.SetActive (false);
 			allRoad.SetActive (false);
+			allApprRate.SetActive (false);
 			break;
 		}
 	}
