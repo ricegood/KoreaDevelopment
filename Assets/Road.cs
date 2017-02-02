@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Road : MonoBehaviour {
+	public SpriteRenderer roadImage;
 	public string myname;
 	public City[] city = new City[2];
 	public int distance;
@@ -10,11 +11,21 @@ public class Road : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		load ();
+		if (isCompleted)
+			roadImage.enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public City getFirstCity(){
+		return city [0];
+	}
+
+	public City getSecondCity(){
+		return city[1];
 	}
 
 	public string getFirstCityName(){
@@ -38,6 +49,7 @@ public class Road : MonoBehaviour {
 		}
 		isCompleted = n;
 		PlayerPrefs.SetString (myname + "IsCompleted", isCompleted.ToString ());
+		roadImage.enabled = true;
 	}
 
 	public bool getCompleted(){

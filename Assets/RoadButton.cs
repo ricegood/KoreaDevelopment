@@ -23,22 +23,26 @@ public class RoadButton : MonoBehaviour {
 		roadBuildingEndTime = Util.GetFloat(PlayerPrefs.GetString ("roadBuildingEndTime"), 0.0f);
 		buildingRoadName1 = PlayerPrefs.GetString ("buildingRoadName1");
 		buildingRoadName2 = PlayerPrefs.GetString ("buildingRoadName2");
+
+		if (isRoadBuilding) {
+			thisObject.GetComponent<Button> ().interactable = false;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (isRoadBuilding) {
-			thisObject.GetComponent<Button> ().interactable = false;
-		}
-
+		
 		// Check the road building
 		if(isRoadBuilding && (myTime.getNow() > roadBuildingEndTime)){
-			RoadButton.isRoadBuilding = false;
-			PlayerPrefs.SetString ("isRoadBuilding", RoadButton.isRoadBuilding.ToString());
+			isRoadBuilding = false;
+			PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString());
 
 			// road completed!
+			Debug.Log(buildingRoadName1 + buildingRoadName2);
 			Road thisRoad = Map.getRoad(buildingRoadName1, buildingRoadName2);
 			thisRoad.setCompleted (true);
+			thisObject.GetComponent<Button> ().interactable = true;
+			Map.addGraph (thisRoad);
 		}
 	}
 
@@ -59,6 +63,7 @@ public class RoadButton : MonoBehaviour {
 				buildingRoadName2 = road.getSecondCityName();
 				PlayerPrefs.SetString ("buildingRoadName1", buildingRoadName1);
 				PlayerPrefs.SetString ("buildingRoadName2", buildingRoadName2);
+				thisObject.GetComponent<Button> ().interactable = false;
 			} else {
 				// no money
 				Util.popup = true;

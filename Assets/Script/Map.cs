@@ -68,16 +68,15 @@ public class Map : MonoBehaviour {
 			city [i].GetComponent<City> ().mapColorUpdate (type);
 		}
 	}
-
-
-	// 여기 return null?????
+		
 	public static Road getRoad(string cityName1, string cityName2){
 		foreach(KeyValuePair<City, List<City>> kv in linkableGraph) 
 		{
-			if (kv.Key.myname.Equals (cityName1)) {
+			if (kv.Key.titleName == cityName1) {
 				for (int i = 0; i < kv.Value.Count; i++) {
-					if (kv.Value [i].myname.Equals (cityName2))
+					if (kv.Value [i].titleName == cityName2) {
 						return getRoad (kv.Key, kv.Value [i]);
+					}
 				}
 			}
 		}
@@ -93,7 +92,6 @@ public class Map : MonoBehaviour {
 			for (int j = 0; j < thisCity.roadList.Length; j++) {
 				// get roadList[j]
 				Road thisRoad = thisCity.roadList[j].GetComponent<Road>();
-
 				// if the road is completed, add the city to the graph.
 				if(thisRoad.getCompleted()){
 					graph [thisCity].Add (thisRoad.getAdgacencyCity(thisCity));
@@ -103,6 +101,11 @@ public class Map : MonoBehaviour {
 				linkableGraph [thisCity].Add (thisRoad.getAdgacencyCity(thisCity));
 			}
 		}
+	}
+
+	public static void addGraph(Road r){
+		graph [r.getFirstCity()].Add (r.getSecondCity());
+		graph [r.getSecondCity()].Add (r.getFirstCity());
 	}
 
 	// menu button..
