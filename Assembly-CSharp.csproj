@@ -58,6 +58,7 @@
      <Compile Include="Assets\Script\Map.cs" />
      <Compile Include="Assets\Script\MoneyText.cs" />
      <Compile Include="Assets\Script\Util.cs" />
+     <Compile Include="Assets\Ulleungdo.cs" />
      <Compile Include="Assets\myTime.cs" />
      <Compile Include="Assets\openCheckPanel.cs" />
  <Reference Include="UnityEngine.UI">
