@@ -48,7 +48,6 @@ public class City : MonoBehaviour {
 		resource = initResource;
 		savedMonth = myTime.getMonth ();
 		load ();
-
 	}
 
 	// Update is called once per frame
@@ -63,7 +62,7 @@ public class City : MonoBehaviour {
 		setEnvironment ((int)(devValue - resource * 0.5) - (int)(treeNumber/1000)*Plant.TREEVALUE);
 		setApprRate (devValue,taxRate);
 		population += 1;
-		devValue = (int)(population * 0.1 + investment * 0.9)/50;
+		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9)/50;
 
 		save ();
 
@@ -314,9 +313,9 @@ public class City : MonoBehaviour {
 		int result;
 
 		if (taxRate < 20) {
-			result = (int)((devValue * 0.5) - taxRate);
+			result = (int)(40 + (devValue * 0.5) - taxRate);
 		} else{
-			result = (int)((devValue * 0.5) - 20 - (taxRate - 20) / 0.5);
+			result = (int)(40 + (devValue * 0.5) - 20 - (taxRate - 20) / 0.5);
 		}
 
 		if (result < 0) {
@@ -346,7 +345,7 @@ public class City : MonoBehaviour {
 		if(PlayerPrefs.HasKey(myname + "DevValue"))
 			devValue = PlayerPrefs.GetInt (myname + "DevValue");
 		if(PlayerPrefs.HasKey(myname + "Population"))
-		population = PlayerPrefs.GetInt (myname + "Population");
+			population = PlayerPrefs.GetInt (myname + "Population");
 		if(PlayerPrefs.HasKey(myname + "ApprRate"))
 			apprRate = PlayerPrefs.GetInt (myname + "ApprRate");
 		if(PlayerPrefs.HasKey(myname + "Investment"))

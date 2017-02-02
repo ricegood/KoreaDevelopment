@@ -5,7 +5,7 @@ public class Character : MonoBehaviour {
 	private static int order;
 //	private static int money;
 	private static string myname;
-	private static int level;
+	private static int level;	// 0: easy, 1: inter, 2: hard
 
 	public static int getLevel(){
 		return level;
