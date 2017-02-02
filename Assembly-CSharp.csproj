@@ -45,10 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plant.cs" />
      <Compile Include="Assets\Resolution\Game\GameMgr.cs" />
-     <Compile Include="Assets\Road.cs" />
-     <Compile Include="Assets\RoadButton.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />
      <Compile Include="Assets\Script\City.cs" />
@@ -57,10 +54,13 @@
      <Compile Include="Assets\Script\Info.cs" />
      <Compile Include="Assets\Script\Map.cs" />
      <Compile Include="Assets\Script\MoneyText.cs" />
+     <Compile Include="Assets\Script\Plant.cs" />
+     <Compile Include="Assets\Script\Road.cs" />
+     <Compile Include="Assets\Script\RoadButton.cs" />
+     <Compile Include="Assets\Script\Ulleungdo.cs" />
      <Compile Include="Assets\Script\Util.cs" />
-     <Compile Include="Assets\Ulleungdo.cs" />
-     <Compile Include="Assets\myTime.cs" />
-     <Compile Include="Assets\openCheckPanel.cs" />
+     <Compile Include="Assets\Script\myTime.cs" />
+     <Compile Include="Assets\Script\openCheckPanel.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

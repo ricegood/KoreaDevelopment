@@ -121,6 +121,7 @@ public class City : MonoBehaviour {
 			map.color = new Color(1f, (float)(1-environment*0.003), (float)(1-environment*0.003), 1f);
 			break;
 		case Map.SUPPORT:
+			map.color = new Color(1f, (float)(1-apprRate*0.0007), (float)(1-apprRate*0.007), 1f);
 			break;
 		}
 
