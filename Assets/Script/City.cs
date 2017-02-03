@@ -61,7 +61,7 @@ public class City : MonoBehaviour {
 			}
 
 			/* <! ------ Value Update Start --------> */
-			setDevValue (initDevValue, population, investment);
+			setDevValue (initDevValue, population, investment, roadList);
 			setEnvironment (devValue, resource, treeNumber);
 			setApprRate (devValue, taxRate, environment);
 			setPopulation();
@@ -325,7 +325,9 @@ public class City : MonoBehaviour {
 		}
 	}
 
-	private void setDevValue(int initDevValue, int population, int investment){
+	private void setDevValue(int initDevValue, int population, int investment, GameObject[] roadList){
+		// roadList 의 complete 여부도 영향 주도록 
+
 		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
 		PlayerPrefs.SetInt (myname + "DevValue", devValue);
 	}
@@ -340,7 +342,6 @@ public class City : MonoBehaviour {
 		}
 
 		if (result < 0) {
-			// ** Game Over !!!!! **
 			apprRate = 0;
 		} else if (result > 100) {
 			apprRate = 100;
