@@ -38,7 +38,7 @@ public class City : MonoBehaviour {
 	private bool roadInteract = true;
 
 	private int savedMonth;
-	private int treeNumber;
+	private static int treeNumber;
 
 
 	// Use this for initialization
@@ -297,9 +297,13 @@ public class City : MonoBehaviour {
 		}
 	}
 
-	public void addTreeNum(int n){
+	public static void addTreeNum(int n){
 		if(n > 0) treeNumber += n;
-		PlayerPrefs.SetInt (myname + "TreeNumber", treeNumber);
+		PlayerPrefs.SetInt ("TreeNumber", treeNumber);
+	}
+
+	public static int getTreeNum(){
+		return treeNumber;
 	}
 
 
@@ -376,6 +380,6 @@ public class City : MonoBehaviour {
 		
 		isMining = (PlayerPrefs.GetString (myname + "IsMining") == "True");
 		miningEndTime = Util.GetFloat (PlayerPrefs.GetString (myname + "MiningEndTime"), 0.0f);
-		treeNumber = PlayerPrefs.GetInt (myname + "TreeNumber");
+		treeNumber = PlayerPrefs.GetInt ("TreeNumber");
 	}
 }

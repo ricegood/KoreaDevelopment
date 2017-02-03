@@ -52,10 +52,13 @@ public class Plant : MonoBehaviour {
 	}
 
 	public void betterEnvironment(int n){
+		/*
 		for(int i=0; i<map.city.Length; i++){
 			City thisCity = map.city [i].GetComponent<City> ();
 			thisCity.addTreeNum (n);
 		}
+		*/
+		City.addTreeNum (n);
 	}
 
 	public void plant(){
