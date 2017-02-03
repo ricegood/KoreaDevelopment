@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class myTime : MonoBehaviour {
 	public Text timeText;
+	public GameObject gameClearPanel;
 	private static int year;
 	private static int month;
 	private static float now;
+	public static bool timeStop;
 
 	private const int SEC = 5; // after 5 seconds, 1 month passed.
 
@@ -21,18 +23,28 @@ public class myTime : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		now += Time.deltaTime;
-		month = ((int)(now / SEC) % 12) + 1;
-		year = ((int)(now / SEC) / 12) + 1;
-		timeText.text = year.ToString() + "년 " + month.ToString() + "월";
-		save ();
+		if (!timeStop) {
+			now += Time.deltaTime;
+			month = ((int)(now / SEC) % 12) + 1;
+			year = ((int)(now / SEC) / 12) + 1;
+			timeText.text = year.ToString () + "년 " + month.ToString () + "월";
+			save ();
+
+			if ((year == 6) && (month == 1)) {
+				gameClear ();
+			}
+		}
 	}
 
 	public void gameClear(){
 		Debug.Log("GAME CLEAR!");
 		Debug.Log ("avgApprRate = " + Country.getAvgApprRate());
 		Debug.Log ("avgDevValue = " + Country.getAvgDevValue());
-		SceneManager.LoadScene("Intro");
+		timeStop = true;
+		gameClearPanel.SetActive (true);
+		Util.popup = true;
+		Util.record (Character.getOrder (), Character.getName (), Country.getPopulation (), Country.getAvgGDP (), Country.getAvgEnvironment (), Country.getAvgApprRate (), true);
+
 	}
 
 	public static int getYear(){

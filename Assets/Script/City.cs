@@ -52,44 +52,46 @@ public class City : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		// get money every 1 month.
-		if(savedMonth != myTime.getMonth()){
-			savedMonth = myTime.getMonth ();
-			Country.setMoney (Country.getMoney () + (int)(((float)taxRate/100) * devValue*100));
-		}
+		if (!myTime.timeStop) {
+			// get money every 1 month.
+			if (savedMonth != myTime.getMonth ()) {
+				savedMonth = myTime.getMonth ();
+				Country.setMoney (Country.getMoney () + (int)(((float)taxRate / 100) * devValue * 100));
+			}
 
-		// Value Setting Functions
-		setEnvironment ((int)(devValue - resource * 0.5) - (int)(treeNumber/1000)*Plant.TREEVALUE);
-		setApprRate (devValue,taxRate);
-		population += 1;
-		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9)/50;
+			// Value Setting Functions
+			setEnvironment ((int)(devValue - resource * 0.5) - (int)(treeNumber / 1000) * Plant.TREEVALUE);
+			setApprRate (devValue, taxRate);
+			population += 1;
+			devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
 
-		save ();
+			save ();
 
-		// Check the mining
-		if(isMining && (myTime.getNow() > miningEndTime)){
-			isMining = false;
-			PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
+			// Check the mining
+			if (isMining && (myTime.getNow () > miningEndTime)) {
+				isMining = false;
+				PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
 
-			// get profit
-			Country.setMoney (Country.getMoney () + (int)((initResource * 0.1f) * MININGPROFIT));
-		}
+				// get profit
+				Country.setMoney (Country.getMoney () + (int)((initResource * 0.1f) * MININGPROFIT));
+			}
 
-		// Map Color Update
-		if (!RoadButton.roadPopup) {
-			mapColorUpdate (Map.type);
-		} else if (RoadButton.secondChoice) {
-			updateEnableCity ();
-		}
+			// Map Color Update
+			if (!RoadButton.roadPopup) {
+				mapColorUpdate (Map.type);
+			} else if (RoadButton.secondChoice) {
+				updateEnableCity ();
+			}
 
-		// Click(touch) Event
-		if (Input.GetMouseButtonDown (0)) {
-			Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
-			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
-			if (!Util.popup && !detailPanel.activeSelf && hitInfo && hitInfo.transform.gameObject.name == myname) {
-				touchEvent ();
+			// Click(touch) Event
+			if (Input.GetMouseButtonDown (0)) {
+				Vector2 pos = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
+				RaycastHit2D hitInfo = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (pos), Vector2.zero);
+				// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
+				if (!Util.popup && !detailPanel.activeSelf && hitInfo && hitInfo.transform.gameObject.name == myname) {
+					touchEvent ();
 
+				}
 			}
 		}
 

@@ -9,11 +9,13 @@ public class Country : MonoBehaviour {
 	public const int HARD_GAMEOVER_VALUE = 40;
 
 	public Map map;
+	public GameObject GameOverPanel;
 	private static int money;
 
 	private static int avgDevValue;
 	private static int population;
 	private static int avgApprRate;
+	private static int avgEnvironment;
 
 	// Use this for initialization
 	void Start () {
@@ -22,29 +24,32 @@ public class Country : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		population = getPop(map.city);
-		avgApprRate = sumApprRate(map.city)/population;
-		avgDevValue = sumDevValue (map.city) / population;
+		if (!myTime.timeStop) {
+			population = getPop (map.city);
+			avgApprRate = sumApprRate (map.city) / population;
+			avgDevValue = sumDevValue (map.city) / population;
+			avgEnvironment = sumEnvironment (map.city) / map.city.Length;
 
-		switch(Character.getLevel()){
-		case 0:
-			if (avgApprRate < EASY_GAMEOVER_VALUE) {
-				// GAME OVER
-				gameOver();
+			switch (Character.getLevel ()) {
+			case 0:
+				if (avgApprRate < EASY_GAMEOVER_VALUE) {
+					// GAME OVER
+					gameOver ();
+				}
+				break;
+			case 1:
+				if (avgApprRate < INTER_GAMEOVER_VALUE) {
+					// GAME OVER
+					gameOver ();
+				}
+				break;
+			case 2:
+				if (avgApprRate < HARD_GAMEOVER_VALUE) {
+					// GAME OVER
+					gameOver ();
+				}
+				break;
 			}
-			break;
-		case 1:
-			if (avgApprRate < INTER_GAMEOVER_VALUE) {
-				// GAME OVER
-				gameOver();
-			}
-			break;
-		case 2:
-			if (avgApprRate < HARD_GAMEOVER_VALUE) {
-				// GAME OVER
-				gameOver();
-			}
-			break;
 		}
 	}
 
@@ -52,8 +57,16 @@ public class Country : MonoBehaviour {
 		return avgApprRate;
 	}
 
+	public static int getAvgEnvironment(){
+		return avgEnvironment;
+	}
+
 	public static int getAvgDevValue(){
 		return avgDevValue;
+	}
+
+	public static int getAvgGDP(){
+		return avgDevValue * 1000;
 	}
 
 	public static int getPopulation(){
@@ -64,7 +77,10 @@ public class Country : MonoBehaviour {
 		Debug.Log("GAME OVER!!!!");
 		Debug.Log ("avgApprRate = " + avgApprRate);
 		Debug.Log ("avgDevValue = " + avgDevValue);
-		SceneManager.LoadScene("Intro");
+		myTime.timeStop = true;
+		GameOverPanel.SetActive (true);
+		Util.popup = true;
+		Util.record (Character.getOrder (), Character.getName (), getPopulation (), getAvgGDP (), getAvgEnvironment (), getAvgApprRate (), false);
 	}
 
 	private int getPop(GameObject[] cityList){
@@ -81,6 +97,15 @@ public class Country : MonoBehaviour {
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
 			sum += thisCity.getPopulation ()*thisCity.getApprRate();
+		}
+		return sum;
+	}
+
+	private int sumEnvironment(GameObject[] cityList){
+		int sum = 0;
+		for(int i=0; i<cityList.Length; i++){
+			City thisCity = cityList [i].GetComponent<City> ();
+			sum += thisCity.getEnvironment();
 		}
 		return sum;
 	}

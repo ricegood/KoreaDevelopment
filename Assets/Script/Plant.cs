@@ -32,20 +32,22 @@ public class Plant : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (isPlanting) {
-			remainTime = (int)(plantingEndTime - myTime.getNow ());
-			timeText.text = remainTime + " s";
-		}
+		if (!myTime.timeStop) {
+			if (isPlanting) {
+				remainTime = (int)(plantingEndTime - myTime.getNow ());
+				timeText.text = remainTime + " s";
+			}
 
-		// Check the planting
-		if(isPlanting && (myTime.getNow() > plantingEndTime)){
-			isPlanting = false;
-			PlayerPrefs.SetString ("isPlanting", isPlanting.ToString());
+			// Check the planting
+			if (isPlanting && (myTime.getNow () > plantingEndTime)) {
+				isPlanting = false;
+				PlayerPrefs.SetString ("isPlanting", isPlanting.ToString ());
 
-			// planting completed!
-			betterEnvironment(plantedTreeNum);
-			thisObject.GetComponent<Button> ().interactable = true;
-			timeText.text = "";
+				// planting completed!
+				betterEnvironment (plantedTreeNum);
+				thisObject.GetComponent<Button> ().interactable = true;
+				timeText.text = "";
+			}
 		}
 	}
 

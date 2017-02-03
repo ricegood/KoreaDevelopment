@@ -15,6 +15,15 @@ public class Util : MonoBehaviour {
 		Screen.SetResolution(900, 1600, true); 
 	}
 
+	public static void record(int order, string name, int population, int GDP, int environment, int apprRate, bool clear){
+		PlayerPrefs.SetString (order + "name", name);
+		PlayerPrefs.SetInt (order + "population", population);
+		PlayerPrefs.SetInt (order + "GDP", GDP);
+		PlayerPrefs.SetInt (order + "environment", environment);
+		PlayerPrefs.SetInt (order + "apprRate", apprRate);
+		PlayerPrefs.SetString (order + "clear", clear.ToString());
+	}
+
 	public void moveScene(string scene){
 		SceneManager.LoadScene(scene);
 	}

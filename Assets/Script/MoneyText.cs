@@ -11,8 +11,10 @@ public class MoneyText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		myText = Util.printIntValue(Country.getMoney());
-		Util.setText (this.GetComponent<Text>(), myText);
+		if (!myTime.timeStop) {
+			myText = Util.printIntValue (Country.getMoney ());
+			Util.setText (this.GetComponent<Text> (), myText);
+		}
 	}
 
 

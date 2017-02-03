@@ -34,22 +34,24 @@ public class RoadButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isRoadBuilding) {
-			remainTime = (int)(roadBuildingEndTime - myTime.getNow ());
-			timeText.text = remainTime + " s";
-		}
+		if (!myTime.timeStop) {
+			if (isRoadBuilding) {
+				remainTime = (int)(roadBuildingEndTime - myTime.getNow ());
+				timeText.text = remainTime + " s";
+			}
 			
-		// Check the road building
-		if(isRoadBuilding && (myTime.getNow() > roadBuildingEndTime)){
-			isRoadBuilding = false;
-			PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString());
+			// Check the road building
+			if (isRoadBuilding && (myTime.getNow () > roadBuildingEndTime)) {
+				isRoadBuilding = false;
+				PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString ());
 
-			// road completed!
-			Road thisRoad = Map.getRoad(buildingRoadName1, buildingRoadName2);
-			thisRoad.setCompleted (true);
-			thisObject.GetComponent<Button> ().interactable = true;
-			Map.addGraph (thisRoad);
-			timeText.text = "";
+				// road completed!
+				Road thisRoad = Map.getRoad (buildingRoadName1, buildingRoadName2);
+				thisRoad.setCompleted (true);
+				thisObject.GetComponent<Button> ().interactable = true;
+				Map.addGraph (thisRoad);
+				timeText.text = "";
+			}
 		}
 	}
 
