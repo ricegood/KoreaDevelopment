@@ -64,11 +64,12 @@ public class Util : MonoBehaviour {
 	public static string printIntValue(int n){
 		if (n < 1000) {
 			return n.ToString ();
+		} else if (n < 1000000) {
+			return (n / 1000).ToString () + "." + ((n % 1000).ToString ()+"0000").Substring(0,4) + "K";
+		} else if (n < 1000000000) {
+			return (n / 1000000).ToString () + "." + ((n % 1000000).ToString ()+"0000").Substring(0,4) + "M";
 		}
-		else if(n < 1000000){
-			return (n/1000).ToString() + "." + (n%1000).ToString() + "K" ;
-		}
-		else return (n/1000000).ToString() + "." + (n%1000000).ToString() + "M" ;
+		else return (n / 1000000000).ToString () + "." + ((n % 1000000000).ToString ()+"0000").Substring(0,4) + "B";
 	}
 
 	public static float GetFloat(string stringValue, float defaultValue)
