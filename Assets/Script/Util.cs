@@ -32,9 +32,11 @@ public class Util : MonoBehaviour {
 		Character.setLevel (d.value);
 	}
 
-	public void createCharacter(Text text){
+	public void reset(){
 		PlayerPrefs.DeleteAll ();
+	}
 
+	public void createCharacter(Text text){
 		switch (Character.getLevel()) {
 		case 0:
 			DEFAULT_MONEY = 10000;
