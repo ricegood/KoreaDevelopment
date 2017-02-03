@@ -57,9 +57,18 @@ public class Map : MonoBehaviour {
 			return false;
 	}
 
+	/*
 	public static bool isConnected(City a, City b){
 		return false;
 	}
+
+	private void setCityFlag(bool b){
+		for(int i=0; i<city.Length; i++){
+			City thisCity = city [i].GetComponent<City> ();
+			thisCity.setFlag (b);
+		}
+	}
+	*/
 
 	public static Road getRoad(City a, City b){
 		for (int i = 0; i < a.roadList.Length; i++) {

@@ -38,7 +38,7 @@ public class Achieve : MonoBehaviour {
 		if (!complete) {
 			switch (type) {
 			case CONNECTION:
-				if (Map.isConnected (city1, city2)) {
+				if (Map.isLinked (city1, city2)) {
 					complete = true;
 					PlayerPrefs.SetString("achievement"+index, complete.ToString());
 				}
