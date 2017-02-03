@@ -17,8 +17,8 @@ public class myTime : MonoBehaviour {
 	void Start () {
 		load ();
 		month = ((int)(now / SEC) % 12) + 1;
-		year = ((int)(now / SEC) / 12) + 1;
-		timeText.text = year.ToString() + "년 " + month.ToString() + "월";
+		year = ((int)(now / SEC) / 12) + 2020;
+		timeText.text = printMonth(month) + " " + year.ToString ();
 	}
 
 	// Update is called once per frame
@@ -26,13 +26,44 @@ public class myTime : MonoBehaviour {
 		if (!timeStop) {
 			now += Time.deltaTime;
 			month = ((int)(now / SEC) % 12) + 1;
-			year = ((int)(now / SEC) / 12) + 1;
-			timeText.text = year.ToString () + "년 " + month.ToString () + "월";
+			year = ((int)(now / SEC) / 12) + 2020;
+			timeText.text = printMonth(month) + " " + year.ToString ();
 			save ();
 
-			if ((year == 6) && (month == 1)) {
+			if ((year == 2025) && (month == 1)) {
 				gameClear ();
 			}
+		}
+	}
+
+	private string printMonth(int month){
+		switch (month) {
+		case 1: 
+			return "JAN";
+		case 2: 
+			return "FEB";
+		case 3:
+			return "MAR";
+		case 4:
+			return "APR";
+		case 5:
+			return "MAY";
+		case 6:
+			return "JUN";
+		case 7:
+			return "JUL";
+		case 8:
+			return "AUG";
+		case 9:
+			return "SEP";
+		case 10:
+			return "OCT";
+		case 11:
+			return "NOV";
+		case 12:
+			return "DEC";
+		default :
+			return "";
 		}
 	}
 

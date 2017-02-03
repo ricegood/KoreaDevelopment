@@ -11,9 +11,22 @@ public class Info : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		myText = Character.getOrder() + "대 " + Character.getName ();
+		myText = getOrder(Character.getOrder()) + " " + Character.getName ();
 		Util.setText (this.GetComponent<Text>(), myText);
 	}
 
+
+	public static string getOrder(int n){
+		int temp = n % 10;
+		if (temp == 1) {
+			return (n + "st");
+		} else if (temp == 2) {
+			return (n + "nd");
+		} else if (temp == 3) {
+			return (n + "rd");
+		} else {
+			return (n + "th");
+		}
+	}
 
 }

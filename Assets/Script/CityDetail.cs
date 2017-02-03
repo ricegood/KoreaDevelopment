@@ -22,8 +22,8 @@ public class CityDetail : MonoBehaviour {
 
 	public void textUpdate(){
 		title.text = thisCity.getTitleName ();
-		info1.text = "인구수 : " + Util.printIntValue(thisCity.getPopulation ()) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
-		info2.text = printIndustry(thisCity.getDevValue()) + "\n투자 금액 : " + Util.printIntValue(thisCity.getInvestment()) + "\n자원 매장량 : " + thisCity.getResource() + " t" + "\n미세먼지 농도 : " + thisCity.getEnvironment() + "\n지지율 : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
+		info1.text = "Population : " + Util.printIntValue(thisCity.getPopulation ()) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
+		info2.text = printIndustry(thisCity.getDevValue()) + "\nInvestment Capital : " + Util.printIntValue(thisCity.getInvestment()) + "\nMineral Deposit : " + thisCity.getResource() + " t" + "\nFine Dust Concentration : " + thisCity.getEnvironment() + "\nApproval Rating : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
 	}
 
 	public void imageUpdate(){

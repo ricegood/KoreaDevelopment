@@ -54,7 +54,7 @@ public class GameRecord : MonoBehaviour {
 	}
 
 	private void pageUpdate(){
-		titleText.text = page + "대 " + PlayerPrefs.GetString (page + "name");
+		titleText.text = Info.getOrder(page) + " " + PlayerPrefs.GetString (page + "name");
 		if(PlayerPrefs.GetString (page + "clear") == "True"){
 			// Game Clear
 			subTitleText.text = "무사히 임기를 마쳤습니다.";
@@ -63,6 +63,6 @@ public class GameRecord : MonoBehaviour {
 			// Game Over
 			subTitleText.text = "국민들의 지지율이 너무 낮아 탄핵되었습니다.";
 		}
-		infoText.text = "인구수 : " + PlayerPrefs.GetInt (page + "population") + "\nGDP : " + PlayerPrefs.GetInt (page + "GDP") + "\n미세먼지 농도 : " + PlayerPrefs.GetInt (page + "environment") + "\n지지율 : " + PlayerPrefs.GetInt (page + "apprRate");
+		infoText.text = "Population : " + PlayerPrefs.GetInt (page + "population") + "\nGDP : " + PlayerPrefs.GetInt (page + "GDP") + "\nFine Dust Concentration : " + PlayerPrefs.GetInt (page + "environment") + "\nApproval Rating : " + PlayerPrefs.GetInt (page + "apprRate");
 	}
 }
