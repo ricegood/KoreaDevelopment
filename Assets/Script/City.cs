@@ -53,19 +53,20 @@ public class City : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!myTime.timeStop) {
+			
 			// get money every 1 month.
 			if (savedMonth != myTime.getMonth ()) {
 				savedMonth = myTime.getMonth ();
 				Country.setMoney (Country.getMoney () + (int)(((float)taxRate / 100) * devValue * 100));
 			}
 
-			// Value Setting Functions
-			setEnvironment ((int)(devValue - resource * 0.5) - (int)(treeNumber / 1000) * Plant.TREEVALUE);
-			setApprRate (devValue, taxRate);
-			population += 1;
-			devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
+			/* <! ------ Value Update Start --------> */
+			setDevValue (initDevValue, population, investment);
+			setEnvironment (devValue, resource, treeNumber);
+			setApprRate (devValue, taxRate, environment);
+			setPopulation();
+			/* <! ------ Value Update End --------> */
 
-			save ();
 
 			// Check the mining
 			if (isMining && (myTime.getNow () > miningEndTime)) {
@@ -274,6 +275,7 @@ public class City : MonoBehaviour {
 				if (resource > 0) {
 					// have resource
 					resource -= initResource * 0.1f;
+					PlayerPrefs.SetString (myname + "Resource", resource.ToString());
 					isMining = true;
 					PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
 					miningEndTime = myTime.getNow () + MININGTIME;
@@ -295,23 +297,40 @@ public class City : MonoBehaviour {
 		}
 	}
 
-	public void setEnvironment(int n){
-		if (n < 0) {
-			environment = 0;
-		} else if (n > 200) {
-			environment = 200;
-		} else{
-			environment = n;
-			PlayerPrefs.SetInt (myname + "Environment", environment);
-		}
-	}
-
 	public void addTreeNum(int n){
 		if(n > 0) treeNumber += n;
 		PlayerPrefs.SetInt (myname + "TreeNumber", treeNumber);
 	}
 
-	public void setApprRate(int devValue, int taxRate){
+
+	/********************************************/
+	/* <! ------ Value Update Function--------> */
+	/********************************************/
+
+	private void setPopulation(){
+		population = population + 1;
+		PlayerPrefs.SetInt (myname + "Population", population);
+	}
+
+	private void setEnvironment(int devValue, float resource, int treeNumber){
+		int result = (int)(devValue - resource * 0.5) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
+
+		if (result < 0) {
+			environment = 0;
+		} else if (result > 200) {
+			environment = 200;
+		} else{
+			environment = result;
+			PlayerPrefs.SetInt (myname + "Environment", environment);
+		}
+	}
+
+	private void setDevValue(int initDevValue, int population, int investment){
+		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
+		PlayerPrefs.SetInt (myname + "DevValue", devValue);
+	}
+
+	private void setApprRate(int devValue, int taxRate, int environment){
 		int result;
 
 		if (taxRate < 20) {
@@ -333,17 +352,12 @@ public class City : MonoBehaviour {
 
 
 
-	public void save(){
-		PlayerPrefs.SetInt (myname + "DevValue", devValue);
-		PlayerPrefs.SetInt (myname + "Population", population);
-		//PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
-		// PlayerPrefs.SetInt (myname + "Investment", investment);
-		PlayerPrefs.SetString (myname + "Resource", resource.ToString());
-		// PlayerPrefs.SetInt (myname + "Environment", environment);
-		// PlayerPrefs.SetInt (myname + "TaxRate", taxRate);
-	}
 
-	public void load(){
+	/********************************************/
+	/* <! ------Data   Load   Function--------> */
+	/********************************************/
+
+	private void load(){
 		if(PlayerPrefs.HasKey(myname + "DevValue"))
 			devValue = PlayerPrefs.GetInt (myname + "DevValue");
 		if(PlayerPrefs.HasKey(myname + "Population"))
