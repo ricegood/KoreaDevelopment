@@ -6,7 +6,7 @@ public class City : MonoBehaviour {
 	private const int INVESTMONEY = 1000;
 	private const int MININGMONEY = 5000;
 	private const int MININGPROFIT = 5000; // per 1t.
-	private const int MININGTIME = 10; // required time for mining (sec)
+	private const int MININGTIME = 1; // required time for mining (sec)
 
 	public string myname;
 	public string titleName;
@@ -17,6 +17,7 @@ public class City : MonoBehaviour {
 	public SpriteRenderer map; 
 	public GameObject detailPanel;
 	public GameObject moneyPanel;
+	public GameObject miningPanel;
 	public GameObject openCheckPanel;
 	public GameObject[] roadList;
 	public Text apprRateText;
@@ -294,7 +295,8 @@ public class City : MonoBehaviour {
 						resource = 0;
 				} else {
 					// no resource
-					Debug.Log ("resource 0!");
+					Util.popup = true;
+					miningPanel.SetActive(true);
 				}
 			} else {
 				// no money
