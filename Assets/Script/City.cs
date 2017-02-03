@@ -41,8 +41,6 @@ public class City : MonoBehaviour {
 	private int savedMonth;
 	private static int treeNumber;
 
-	private bool flag;	// for BFS , DFS search of Map
-
 
 	// Use this for initialization
 	void Start () {
@@ -253,13 +251,10 @@ public class City : MonoBehaviour {
 		return taxRate;
 	}
 
-	public bool getFlag(){
-		return flag;
+	public int getGDP(){
+		return devValue * 1000;
 	}
 
-	public void setFlag(bool b){
-		flag = b;
-	}
 
 	public void increaseTaxRate(){
 		if (taxRate < 100) {

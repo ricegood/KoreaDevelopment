@@ -22,8 +22,8 @@ public class CityDetail : MonoBehaviour {
 
 	public void textUpdate(){
 		title.text = thisCity.getTitleName ();
-		info1.text = "인구수 : " + Util.printIntValue(thisCity.getPopulation ()) + "\nGDP : " + Util.printIntValue(thisCity.getDevValue ());
-		info2.text = "XXXX 산업" + "\n투자 금액 : " + Util.printIntValue(thisCity.getInvestment()) + "\n자원 매장량 : " + thisCity.getResource() + "\n미세먼지 농도 : " + thisCity.getEnvironment() + "\n지지율 : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
+		info1.text = "인구수 : " + Util.printIntValue(thisCity.getPopulation ()) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
+		info2.text = printIndustry(thisCity.getDevValue()) + "\n투자 금액 : " + Util.printIntValue(thisCity.getInvestment()) + "\n자원 매장량 : " + thisCity.getResource() + " t" + "\n미세먼지 농도 : " + thisCity.getEnvironment() + "\n지지율 : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
 	}
 
 	public void imageUpdate(){
@@ -40,5 +40,17 @@ public class CityDetail : MonoBehaviour {
 
 	public void decreaseTaxRate(){
 		thisCity.decreaseTaxRate ();
+	}
+
+	private string printIndustry(int n){
+		if (n <= 25) {
+			return "농/어업 중심 산업";
+		} else if (n <= 50) {
+			return "섬유/가발 중심 경공업";
+		} else if (n <= 75) {
+			return "중공업";
+		} else {
+			return "첨단산업";
+		}
 	}
 }
