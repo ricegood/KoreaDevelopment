@@ -166,6 +166,12 @@ public class Map : MonoBehaviour {
 			allRoad.SetActive (false);
 			allApprRate.SetActive (true);
 			break;
+		case RESOURCE:
+			plantButton.SetActive (false);
+			roadButton.SetActive (false);
+			allRoad.SetActive (false);
+			allApprRate.SetActive (true);
+			break;
 		default:
 			plantButton.SetActive (false);
 			roadButton.SetActive (false);

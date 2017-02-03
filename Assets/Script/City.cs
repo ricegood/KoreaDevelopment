@@ -6,7 +6,7 @@ public class City : MonoBehaviour {
 	private const int INVESTMONEY = 1000;
 	private const int MININGMONEY = 5000;
 	private const int MININGPROFIT = 5000; // per 1t.
-	private const int MININGTIME = 1; // required time for mining (sec)
+	private const int MININGTIME = 10; // required time for mining (sec)
 
 	public string myname;
 	public string titleName;
@@ -120,8 +120,13 @@ public class City : MonoBehaviour {
 			else map.color = new Color(1-(float)(investment*0.000025)*0.7f, 1-(float)(investment*0.000025)*0.7f, 1f, 1f);
 			break;
 		case Map.RESOURCE:
-			if(isMining) map.color = new Color (1f, 0.55f, 0.55f, 1f);
-			else map.color = new Color(1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1-(float)((float)resource/100)*0.7f, 1f);
+			if (isMining) {
+				map.color = new Color (1f, 0.55f, 0.55f, 1f);
+				apprRateText.text = (int)(miningEndTime - myTime.getNow ()) + "s";
+			} else {
+				apprRateText.text = resource+"t";
+				map.color = new Color (1 - (float)((float)resource / 100) * 0.7f, 1 - (float)((float)resource / 100) * 0.7f, 1 - (float)((float)resource / 100) * 0.7f, 1f);
+			}
 			break;
 		case Map.ENVIRONMENT:
 			map.color = new Color(1f, (float)(1-environment*0.003), (float)(1-environment*0.003), 1f);
@@ -286,13 +291,12 @@ public class City : MonoBehaviour {
 				if (resource > 0) {
 					// have resource
 					resource -= initResource * 0.1f;
+					if (resource <= 0) resource = 0;
 					PlayerPrefs.SetString (myname + "Resource", resource.ToString());
 					isMining = true;
 					PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
 					miningEndTime = myTime.getNow () + MININGTIME;
 					PlayerPrefs.SetString (myname + "MiningEndTime", miningEndTime.ToString ());
-					if (resource < 0)
-						resource = 0;
 				} else {
 					// no resource
 					Util.popup = true;
