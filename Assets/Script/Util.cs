@@ -22,6 +22,9 @@ public class Util : MonoBehaviour {
 		PlayerPrefs.SetInt (order + "environment", environment);
 		PlayerPrefs.SetInt (order + "apprRate", apprRate);
 		PlayerPrefs.SetString (order + "clear", clear.ToString());
+
+		PlayerPrefs.SetInt (order + "Month", myTime.getMonth ());
+		PlayerPrefs.SetInt (order + "Year", myTime.getYear ());
 	}
 
 	public void moveScene(string scene){
@@ -37,6 +40,10 @@ public class Util : MonoBehaviour {
 	}
 
 	public void createCharacter(Text text){
+		popup = false;
+		myTime.timeStop = false;
+		RoadButton.roadPopup = false;
+
 		switch (Character.getLevel()) {
 		case 0:
 			DEFAULT_MONEY = 10000;

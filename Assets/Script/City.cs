@@ -6,7 +6,7 @@ public class City : MonoBehaviour {
 	private const int INVESTMONEY = 1000;
 	private const int MININGMONEY = 5000;
 	private const int MININGPROFIT = 5000; // per 1t.
-	private const int MININGTIME = 1; // required time for mining (sec)
+	private const int MININGTIME = 5; // required time for mining (sec)
 
 	public string myname;
 	public string titleName;
@@ -30,6 +30,14 @@ public class City : MonoBehaviour {
 	private int environment = 0;
 	private int taxRate = 10;	// GDP * taxRate/100
 
+	private int prevDevValue;
+	private int prevEnvironment;
+	private int prevTaxRate = 10;
+
+	private int dDevValue;
+	private int dEnvironment;
+	private int dTaxRate;
+
 	private bool isMining;
 	private float miningEndTime;
 
@@ -46,9 +54,17 @@ public class City : MonoBehaviour {
 	void Start () {
 		map = this.GetComponent<SpriteRenderer> ();
 		devValue = initDevValue;
+		prevDevValue = initDevValue;
 		resource = initResource;
 		savedMonth = myTime.getMonth ();
 		load ();
+
+		//delta value
+		dDevValue = devValue - prevDevValue;
+		dEnvironment = environment - prevEnvironment;
+		Debug.Log ("env : " + environment + " , preenv; " + prevEnvironment);
+		dTaxRate = taxRate - prevTaxRate;
+		Debug.Log (myname + " delta value : " + dDevValue + " / " + dEnvironment + " / " + dTaxRate);
 	}
 
 	// Update is called once per frame
@@ -64,7 +80,12 @@ public class City : MonoBehaviour {
 			/* <! ------ Value Update Start --------> */
 			setDevValue (initDevValue, population, investment, roadList);
 			setEnvironment (devValue, resource, treeNumber);
-			setApprRate (devValue, taxRate, environment);
+
+			dDevValue = devValue - prevDevValue;
+			dEnvironment = environment - prevEnvironment;
+			dTaxRate = taxRate - prevTaxRate;
+
+			setApprRate (dDevValue, dTaxRate, dEnvironment);
 			setPopulation();
 			/* <! ------ Value Update End --------> */
 
@@ -92,7 +113,6 @@ public class City : MonoBehaviour {
 				// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
 				if (!Util.popup && !detailPanel.activeSelf && hitInfo && hitInfo.transform.gameObject.name == myname) {
 					touchEvent ();
-
 				}
 			}
 		}
@@ -259,14 +279,14 @@ public class City : MonoBehaviour {
 	public void increaseTaxRate(){
 		if (taxRate < 100) {
 			taxRate++;
-			PlayerPrefs.SetInt (myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (Character.getOrder() + myname + "TaxRate", taxRate);
 		}
 	}
 
 	public void decreaseTaxRate(){
 		if (taxRate > 0) {
 			taxRate--;
-			PlayerPrefs.SetInt (myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (Character.getOrder() + myname + "TaxRate", taxRate);
 		}
 	}
 		
@@ -336,7 +356,7 @@ public class City : MonoBehaviour {
 			environment = 200;
 		} else{
 			environment = result;
-			PlayerPrefs.SetInt (myname + "Environment", environment);
+			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
 		}
 	}
 
@@ -344,22 +364,24 @@ public class City : MonoBehaviour {
 		// roadList 의 complete 여부도 영향 주도록 
 
 		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
-		PlayerPrefs.SetInt (myname + "DevValue", devValue);
+		PlayerPrefs.SetInt (Character.getOrder() + myname + "DevValue", devValue);
 	}
 
 	private void setApprRate(int devValue, int taxRate, int environment){
 		int result;
 
 		if (taxRate < 20) {
-			result = (int)(40 + (devValue * 0.5) - taxRate);
+			result = (int)(40 + (devValue * 0.1) - taxRate);
 		} else{
-			result = (int)(40 + (devValue * 0.5) - 20 - (taxRate - 20) / 0.5);
+			result = (int)(40 + (devValue * 0.1) - 20 - (taxRate - 20) / 0.5);
 		}
 
 		if (result < 0) {
 			apprRate = 0;
+			PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
 		} else if (result > 100) {
 			apprRate = 100;
+			PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
 		} else{
 			apprRate = result;
 			PlayerPrefs.SetInt (myname + "ApprRate", apprRate);
@@ -374,8 +396,13 @@ public class City : MonoBehaviour {
 	/********************************************/
 
 	private void load(){
-		if(PlayerPrefs.HasKey(myname + "DevValue"))
-			devValue = PlayerPrefs.GetInt (myname + "DevValue");
+		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "DevValue"))
+			devValue = PlayerPrefs.GetInt (Character.getOrder () + myname + "DevValue");
+		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "DevValue")) {
+			devValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
+			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "DevValue", devValue);
+		}
+				
 		if(PlayerPrefs.HasKey(myname + "Population"))
 			population = PlayerPrefs.GetInt (myname + "Population");
 		if(PlayerPrefs.HasKey(myname + "ApprRate"))
@@ -384,13 +411,33 @@ public class City : MonoBehaviour {
 			investment = PlayerPrefs.GetInt (myname + "Investment");
 		if(PlayerPrefs.HasKey(myname + "Resource"))
 			resource = Util.GetFloat(PlayerPrefs.GetString (myname + "Resource"), 0.0f);
-		if(PlayerPrefs.HasKey(myname + "Environment"))
-			environment = PlayerPrefs.GetInt (myname + "Environment");
-		if(PlayerPrefs.HasKey(myname + "TaxRate"))
-			taxRate = PlayerPrefs.GetInt (myname + "TaxRate");
+		
+		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "Environment"))
+			environment = PlayerPrefs.GetInt (Character.getOrder () + myname + "Environment");
+		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "Environment")) {
+			environment = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "Environment");
+			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "Environment", environment);
+		}
+				
+		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "TaxRate"))
+			taxRate = PlayerPrefs.GetInt (Character.getOrder () + myname + "TaxRate");
+		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "TaxRate")) {
+			taxRate = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "TaxRate");
+			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "TaxRate", taxRate);
+		}
 		
 		isMining = (PlayerPrefs.GetString (myname + "IsMining") == "True");
 		miningEndTime = Util.GetFloat (PlayerPrefs.GetString (myname + "MiningEndTime"), 0.0f);
 		treeNumber = PlayerPrefs.GetInt ("TreeNumber");
+
+		if (PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "DevValue"))
+			prevDevValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
+		
+		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "Environment"))
+			prevEnvironment = PlayerPrefs.GetInt((Character.getOrder()-1) + myname + "Environment" );
+
+		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "TaxRate"))
+			prevTaxRate = PlayerPrefs.GetInt ((Character.getOrder()-1) + myname + "TaxRate");
+
 	}
 }

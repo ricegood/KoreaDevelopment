@@ -9,12 +9,18 @@ public class myTime : MonoBehaviour {
 	private static int year;
 	private static int month;
 	private static float now;
+
+	private static int prevYear;
+	private static int prevMonth;
+
 	public static bool timeStop;
 
-	private const int SEC = 5; // after 5 seconds, 1 month passed.
+	private const int SEC = 3; // after 5 seconds, 1 month passed.
 
 	// Use this for initialization
 	void Start () {
+		prevMonth = ((int)(now / SEC) % 12) + 1;
+		prevYear = ((int)(now / SEC) / 12) + 2020;
 		load ();
 		month = ((int)(now / SEC) % 12) + 1;
 		year = ((int)(now / SEC) / 12) + 2020;
@@ -30,13 +36,13 @@ public class myTime : MonoBehaviour {
 			timeText.text = printMonth(month) + " " + year.ToString ();
 			save ();
 
-			if ((year == 2025) && (month == 1)) {
+			if (year*12 + month >= prevYear*12 + prevMonth + 60) {
 				gameClear ();
 			}
 		}
 	}
 
-	private string printMonth(int month){
+	public static string printMonth(int month){
 		switch (month) {
 		case 1: 
 			return "JAN";
@@ -95,6 +101,12 @@ public class myTime : MonoBehaviour {
 	}
 	private void load(){
 		now = Util.GetFloat(PlayerPrefs.GetString ("playTime"), 0.0f);
+		int order = PlayerPrefs.GetInt ("order");
+		if(PlayerPrefs.HasKey((order-1) + "Year"))
+			prevYear = PlayerPrefs.GetInt ((order-1) + "Year");
+
+		if(PlayerPrefs.HasKey((order-1) + "Month"))
+			prevMonth = PlayerPrefs.GetInt ((order-1) + "Month");
 	}
 
 

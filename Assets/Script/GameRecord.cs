@@ -57,12 +57,16 @@ public class GameRecord : MonoBehaviour {
 		titleText.text = Info.getOrder(page) + " " + PlayerPrefs.GetString (page + "name");
 		if(PlayerPrefs.GetString (page + "clear") == "True"){
 			// Game Clear
-			subTitleText.text = "무사히 임기를 마쳤습니다.";
+			subTitleText.text = "무사히 임기를 마쳤습니다.\n ~ " + printPeriod();
 		}
 		else {
 			// Game Over
-			subTitleText.text = "국민들의 지지율이 너무 낮아 탄핵되었습니다.";
+			subTitleText.text = "국민들의 지지율이 너무 낮아 탄핵되었습니다.\n ~ " + printPeriod();
 		}
 		infoText.text = "Population : " + PlayerPrefs.GetInt (page + "population") + "\nGDP : " + PlayerPrefs.GetInt (page + "GDP") + "\nFine Dust Concentration : " + PlayerPrefs.GetInt (page + "environment") + "\nApproval Rating : " + PlayerPrefs.GetInt (page + "apprRate");
+	}
+
+	private string printPeriod(){
+		return myTime.printMonth (PlayerPrefs.GetInt (page + "Month")) + " " + PlayerPrefs.GetInt (page + "Year");
 	}
 }

@@ -77,9 +77,6 @@ public class Country : MonoBehaviour {
 	}
 
 	private void gameOver(){
-		Debug.Log("GAME OVER!!!!");
-		Debug.Log ("avgApprRate = " + avgApprRate);
-		Debug.Log ("avgDevValue = " + avgDevValue);
 		myTime.timeStop = true;
 		GameOverPanel.SetActive (true);
 		Util.popup = true;
