@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Plant : MonoBehaviour {
-	public const int TREEMONEY = 5000;		// per 1000 tree
+	public const int TREEMONEY = 100000;		// per 1000 tree
 	public const int TREETIME = 5;				// sec per 1000 tree
-	public const int TREEVALUE = 100;			// environment pollution decreased by TREEVALUE, per 1000 tree.
+	public const int TREEVALUE = 5;			// environment pollution decreased by TREEVALUE, per 1000 tree.
 
 	public Text text;
 	public Text timeText;

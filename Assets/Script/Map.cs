@@ -80,7 +80,7 @@ public class Map : MonoBehaviour {
 		}
 		return null;
 	}
-		
+
 	public void mapColorUpate(){
 		for(int i=0; i<city.Length; i++){
 			city [i].GetComponent<City> ().mapColorUpdate (type);

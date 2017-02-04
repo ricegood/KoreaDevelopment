@@ -22,7 +22,7 @@ public class CityDetail : MonoBehaviour {
 
 	public void textUpdate(){
 		title.text = thisCity.getTitleName ();
-		info1.text = "Population : " + Util.printIntValue(thisCity.getPopulation ()) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
+		info1.text = "Population : " + Util.printIntValue((int)(thisCity.getPopulation ())) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
 		info2.text = printIndustry(thisCity.getDevValue()) + "\nInvestment Capital : " + Util.printIntValue(thisCity.getInvestment()) + "\nMineral Deposit : " + thisCity.getResource() + " t" + "\nFine Dust Concentration : " + thisCity.getEnvironment() + "\nApproval Rating : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
 	}
 

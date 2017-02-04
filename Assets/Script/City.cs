@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class City : MonoBehaviour {
-	private const int INVESTMONEY = 1000;
-	private const int MININGMONEY = 5000;
-	private const int MININGPROFIT = 5000; // per 1t.
+	private const int INVESTMONEY = 10000;
+	private const int MININGMONEY = 50000;
+	private const int MININGPROFIT = 50000; // per 1t.
 	private const int MININGTIME = 5; // required time for mining (sec)
 
 	public string myname;
@@ -24,7 +25,7 @@ public class City : MonoBehaviour {
 	public AudioSource click;
 
 	private int devValue;		// GDP
-	private int population = 0; // initial value
+	private float population = 2000; // initial value
 	private int apprRate = 50;	// 0~100 (%) initial value
 	private int investment = 0; // initial value
 	private float resource;		// unit : [t]
@@ -82,7 +83,7 @@ public class City : MonoBehaviour {
 
 			/* <! ------ Value Update Start --------> */
 			setDevValue (initDevValue, population, investment, roadNumber);
-			setEnvironment (devValue, resource, treeNumber);
+			setEnvironment (investment, roadNumber, resource, treeNumber);
 
 			dDevValue = devValue - prevDevValue;
 			dEnvironment = environment - prevEnvironment;
@@ -126,7 +127,7 @@ public class City : MonoBehaviour {
 		switch (type) {
 		case Map.DEFAULT:
 			if (!RoadButton.roadPopup) {
-				map.color = new Color ((float)(1 - devValue * 0.001), 1f, (float)(1 - devValue * 0.001), 1f);
+				map.color = new Color ((float)(1 - devValue * 0.0005), 1f, (float)(1 - devValue * 0.0005), 1f);
 			} else if (roadList.Length == 0) {
 				map.color = new Color (1f, 1f, 1f, 0.5f);
 				roadInteract = false;
@@ -137,8 +138,8 @@ public class City : MonoBehaviour {
 			break;
 		case Map.INDUSTRY:
 			// modify [ 4000 , 0.000025 ] values to change limitation.
-			if (investment > 40000) map.color = new Color (0.3f, 0.3f, 1f, 1f);
-			else map.color = new Color(1-(float)(investment*0.000025)*0.7f, 1-(float)(investment*0.000025)*0.7f, 1f, 1f);
+			if (investment > 400000) map.color = new Color (0.3f, 0.3f, 1f, 1f);
+			else map.color = new Color(1-(float)(investment*0.0000025)*0.7f, 1-(float)(investment*0.0000025)*0.7f, 1f, 1f);
 			break;
 		case Map.RESOURCE:
 			if (isMining) {
@@ -150,10 +151,10 @@ public class City : MonoBehaviour {
 			}
 			break;
 		case Map.ENVIRONMENT:
-			map.color = new Color(1f, (float)(1-environment*0.003), (float)(1-environment*0.003), 1f);
+			map.color = new Color(1f, (float)(1-environment*0.005), (float)(1-environment*0.005), 1f);
 			break;
 		case Map.SUPPORT:
-			map.color = new Color (1f, (float)(1 - apprRate * 0.0007), (float)(1 - apprRate * 0.007), 1f);
+			map.color = new Color (1f, (float)(1 - apprRate * 0.001), (float)(1 - apprRate * 0.01), 1f);
 			apprRateText.text = apprRate.ToString() + "%";
 			break;
 		}
@@ -254,7 +255,7 @@ public class City : MonoBehaviour {
 		return devValue;
 	}
 
-	public int getPopulation(){
+	public float getPopulation(){
 		return population;
 	}
 
@@ -365,37 +366,34 @@ public class City : MonoBehaviour {
 	/********************************************/
 
 	private void setPopulation(){
-		population = population + 1;
-		PlayerPrefs.SetInt (myname + "Population", population);
+		population = population + 0.01f;
+		PlayerPrefs.SetFloat (myname + "Population", population);
 	}
 
-	private void setEnvironment(int devValue, float resource, int treeNumber){
-		int result = (int)(devValue - resource * 0.5) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
+	private void setEnvironment(int investment, int roadNumber, float resource, int treeNumber){
+		int result = (int)(investment*0.0004 + roadNumber*10 - resource*0.05) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
 
 		if (result < 0) {
 			environment = 0;
+			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
 		} else if (result > 200) {
 			environment = 200;
+			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
 		} else{
 			environment = result;
 			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
 		}
 	}
 
-	private void setDevValue(int initDevValue, int population, int investment, int roadNumber){
-		// roadNumber 도 영향 주도록
-		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
+	private void setDevValue(int initDevValue, float population, int investment, int roadNumber){
+		devValue = initDevValue + (int)(population * 0.05 + investment * 0.5 + roadNumber * 7500) / 100;
 		PlayerPrefs.SetInt (Character.getOrder() + myname + "DevValue", devValue);
 	}
 
 	private void setApprRate(int devValue, int taxRate, int environment){
 		int result;
 
-		if (taxRate < 20) {
-			result = (int)(40 + (devValue * 0.1) - taxRate);
-		} else{
-			result = (int)(40 + (devValue * 0.1) - 20 - (taxRate - 20) / 0.5);
-		}
+		result = (int)(50 + (devValue * 0.02) - Math.Pow(taxRate, 1.3) - environment*0.15);
 
 		if (result < 0) {
 			apprRate = 0;
@@ -425,7 +423,7 @@ public class City : MonoBehaviour {
 		}
 				
 		if(PlayerPrefs.HasKey(myname + "Population"))
-			population = PlayerPrefs.GetInt (myname + "Population");
+			population = PlayerPrefs.GetFloat (myname + "Population");
 		if(PlayerPrefs.HasKey(myname + "ApprRate"))
 			apprRate = PlayerPrefs.GetInt (myname + "ApprRate");
 		if(PlayerPrefs.HasKey(myname + "Investment"))

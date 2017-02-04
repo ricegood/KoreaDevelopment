@@ -1,12 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/City.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/CityDetail.cs">
     <Files>
-      <File FileName="Assets/Script/City.cs" Line="9" Column="34" />
-      <File FileName="Assets/Script/Util.cs" Line="40" Column="34" />
-      <File FileName="Assets/Script/Plant.cs" Line="23" Column="13" />
-      <File FileName="Assets/Script/Map.cs" Line="174" Column="10" />
-      <File FileName="Assets/Script/myTime.cs" Line="33" Column="21" />
+      <File FileName="Assets/Script/Util.cs" Line="6" Column="36" />
+      <File FileName="Assets/Script/Map.cs" Line="40" Column="5" />
+      <File FileName="Assets/Script/myTime.cs" Line="18" Column="27" />
+      <File FileName="Assets/Script/Country.cs" Line="58" Column="2" />
+      <File FileName="Assets/Script/GameRecord.cs" Line="56" Column="28" />
+      <File FileName="Assets/Script/RoadButton.cs" Line="50" Column="34" />
+      <File FileName="Assets/Script/Road.cs" Line="54" Column="3" />
+      <File FileName="Assets/Script/CityDetail.cs" Line="26" Column="339" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

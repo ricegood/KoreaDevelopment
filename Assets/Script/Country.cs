@@ -87,7 +87,7 @@ public class Country : MonoBehaviour {
 		int sum = 0;
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
-			sum += thisCity.getPopulation ();
+			sum += (int)(thisCity.getPopulation ());
 		}
 		return sum;
 	}
@@ -96,7 +96,7 @@ public class Country : MonoBehaviour {
 		int sum = 0;
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
-			sum += thisCity.getPopulation ()*thisCity.getApprRate();
+			sum += (int)thisCity.getPopulation ()*thisCity.getApprRate();
 		}
 		return sum;
 	}
@@ -114,7 +114,7 @@ public class Country : MonoBehaviour {
 		int sum = 0;
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
-			sum += thisCity.getPopulation ()*thisCity.getDevValue();
+			sum += (int)thisCity.getPopulation ()*thisCity.getDevValue();
 		}
 		return sum;
 	}
