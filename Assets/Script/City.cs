@@ -21,6 +21,7 @@ public class City : MonoBehaviour {
 	public GameObject openCheckPanel;
 	public GameObject[] roadList;
 	public Text apprRateText;
+	public AudioSource click;
 
 	private int devValue;		// GDP
 	private int population = 0; // initial value
@@ -29,6 +30,7 @@ public class City : MonoBehaviour {
 	private float resource;		// unit : [t]
 	private int environment = 0;
 	private int taxRate = 10;	// GDP * taxRate/100
+	private int roadNumber;
 
 	private int prevDevValue;
 	private int prevEnvironment;
@@ -57,6 +59,7 @@ public class City : MonoBehaviour {
 		prevDevValue = initDevValue;
 		resource = initResource;
 		savedMonth = myTime.getMonth ();
+		setRoadNum(roadList);
 		load ();
 
 		//delta value
@@ -78,7 +81,7 @@ public class City : MonoBehaviour {
 			}
 
 			/* <! ------ Value Update Start --------> */
-			setDevValue (initDevValue, population, investment, roadList);
+			setDevValue (initDevValue, population, investment, roadNumber);
 			setEnvironment (devValue, resource, treeNumber);
 
 			dDevValue = devValue - prevDevValue;
@@ -162,6 +165,7 @@ public class City : MonoBehaviour {
 		case Map.DEFAULT:
 			// Open the Detail Panel
 			if (!RoadButton.roadPopup) {
+				click.Play ();
 				detailPanel.GetComponent<CityDetail> ().setCity (this.GetComponent<City> ());
 				detailPanel.GetComponent<CityDetail> ().imageUpdate ();
 				detailPanel.GetComponent<CityDetail> ().textUpdate ();
@@ -171,6 +175,7 @@ public class City : MonoBehaviour {
 			// if the road button is clicked -> create road.  (take 10 minutes)
 			else if(roadInteract){
 				// first choice
+				click.Play ();
 				if (!isRoadClicked && !RoadButton.secondChoice) {
 					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
 					RoadButton.secondChoice = true;
@@ -184,6 +189,7 @@ public class City : MonoBehaviour {
 					this.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.55f, 0.55f, 1f);
 					isRoadClicked = true;
 					openCheckPanel.SetActive(true);
+					Util.popup = true;
 					secondChoosed = this;
 
 					// => then, choosed list reset when OK button
@@ -205,6 +211,7 @@ public class City : MonoBehaviour {
 			}
 			break;
 		case Map.INDUSTRY:
+			click.Play ();
 			// investment
 			invest();
 			break;
@@ -302,6 +309,7 @@ public class City : MonoBehaviour {
 
 	public void mining(){
 		if (!isMining) {
+			click.Play ();
 			if (Country.setMoney (Country.getMoney () - MININGMONEY)) {
 				if (resource > 0) {
 					// have resource
@@ -337,6 +345,20 @@ public class City : MonoBehaviour {
 		return treeNumber;
 	}
 
+	public void setRoadNum(GameObject[] roadList){
+		int count = 0;
+
+		for (int i = 0; i < roadList.Length; i++) {
+			if (roadList [i].GetComponent<Road> ().getCompleted ())
+				count++;
+		}
+		roadNumber = count;
+	}
+
+	public int getRoadNum(){
+		return roadNumber;
+	}
+
 
 	/********************************************/
 	/* <! ------ Value Update Function--------> */
@@ -360,9 +382,8 @@ public class City : MonoBehaviour {
 		}
 	}
 
-	private void setDevValue(int initDevValue, int population, int investment, GameObject[] roadList){
-		// roadList 의 complete 여부도 영향 주도록 
-
+	private void setDevValue(int initDevValue, int population, int investment, int roadNumber){
+		// roadNumber 도 영향 주도록
 		devValue = initDevValue + (int)(population * 0.1 + investment * 0.9) / 50;
 		PlayerPrefs.SetInt (Character.getOrder() + myname + "DevValue", devValue);
 	}

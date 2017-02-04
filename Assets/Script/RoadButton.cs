@@ -48,6 +48,8 @@ public class RoadButton : MonoBehaviour {
 				// road completed!
 				Road thisRoad = Map.getRoad (buildingRoadName1, buildingRoadName2);
 				thisRoad.setCompleted (true);
+				thisRoad.getFirstCity().setRoadNum (thisRoad.getFirstCity().roadList);
+				thisRoad.getSecondCity().setRoadNum (thisRoad.getSecondCity().roadList);
 				thisObject.GetComponent<Button> ().interactable = true;
 				Map.addGraph (thisRoad);
 				timeText.text = "";

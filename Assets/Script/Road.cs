@@ -44,9 +44,6 @@ public class Road : MonoBehaviour {
 	}
 
 	public void setCompleted(bool n){
-		if (n == true) {
-			//mapping!
-		}
 		isCompleted = n;
 		PlayerPrefs.SetString (myname + "IsCompleted", isCompleted.ToString ());
 		roadImage.enabled = true;
