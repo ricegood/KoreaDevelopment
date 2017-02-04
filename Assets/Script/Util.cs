@@ -46,13 +46,13 @@ public class Util : MonoBehaviour {
 
 		switch (Character.getLevel()) {
 		case 0:
-			DEFAULT_MONEY = 10000;
+			DEFAULT_MONEY = 100000;
 			break;
 		case 1:
-			DEFAULT_MONEY = 5000;
+			DEFAULT_MONEY = 50000;
 			break;
 		case 2:
-			DEFAULT_MONEY = 3000;
+			DEFAULT_MONEY = 30000;
 			break;
 		}
 
