@@ -71,12 +71,12 @@ public class Achieve : MonoBehaviour {
 	public void giveReward(){
 		if(getReward){
 			//already get reward
-			rewardText.text = "이미 보상을 받았습니다.";
+			rewardText.text = "You have already claimed your reward.";
 		}
 		else{
 			getReward = true;
 			PlayerPrefs.SetString ("achievementGetReward" + index, getReward.ToString());
-			rewardText.text = "보상으로 돈 " + Util.printIntValue(reward) + "이 지급되었습니다 !";
+			rewardText.text = Util.printIntValue(reward) +" has been added to the budget as a reward!" ;
 			Country.setMoney (Country.getMoney () + reward);
 		}
 	}

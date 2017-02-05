@@ -28,7 +28,7 @@ public class GameRecord : MonoBehaviour {
 		} else {
 			infoText.text="";
 			next.SetActive (false);
-			subTitleText.text="역대 대통령의 기록이 없습니다.";
+			subTitleText.text="There are no previous president records in the Blue House.";
 		}
 	}
 	
@@ -57,11 +57,11 @@ public class GameRecord : MonoBehaviour {
 		titleText.text = Info.getOrder(page) + " " + PlayerPrefs.GetString (page + "name");
 		if(PlayerPrefs.GetString (page + "clear") == "True"){
 			// Game Clear
-			subTitleText.text = "무사히 임기를 마쳤습니다.\n ~ " + printPeriod();
+			subTitleText.text = "You have successfully finished the term of presidency.\n ~ " + printPeriod();
 		}
 		else {
 			// Game Over
-			subTitleText.text = "국민들의 지지율이 너무 낮아 탄핵되었습니다.\n ~ " + printPeriod();
+			subTitleText.text = "You have been impeached by Congress due to growing unpopularity.\n ~ " + printPeriod();
 		}
 		infoText.text = "Population : " + PlayerPrefs.GetInt (page + "population") + "\nGDP : " + PlayerPrefs.GetInt (page + "GDP") + "\nFine Dust Concentration : " + PlayerPrefs.GetInt (page + "environment") + "\nApproval Rating : " + PlayerPrefs.GetInt (page + "apprRate");
 	}

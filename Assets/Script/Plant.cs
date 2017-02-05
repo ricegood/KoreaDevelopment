@@ -94,7 +94,7 @@ public class Plant : MonoBehaviour {
 	}
 
 	public void textUpdate(){
-		text.text = "나무를 몇그루 심으시겠습니까?\n\n" + treeNum + "\n\n비용 : " + Util.printIntValue((treeNum / 1000) * TREEMONEY) + "\n소요시간 : " + ((treeNum / 1000) * TREETIME) + "s";
+		text.text = "Determine the number of trees the plant.\n\n" + treeNum + "\n\nCost : " + Util.printIntValue((treeNum / 1000) * TREEMONEY) + "\nEstimated Time : " + ((treeNum / 1000) * TREETIME) + "s";
 	}
 
 	public void textReset(){

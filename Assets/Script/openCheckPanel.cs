@@ -17,7 +17,7 @@ public class openCheckPanel : MonoBehaviour {
 	}
 
 	public void updateText(){
-		text.text = road.getFirstCityName () + "-" + road.getSecondCityName () + " 도로를 건설하시겠습니까?" + "\n비용 : " + Util.printIntValue(road.distance * RoadButton.ROADMONEY) + "\n소요시간 : " + (road.distance * RoadButton.ROADTIME) + "sec";
+		text.text = "Construct a road from " + road.getFirstCityName () + " to " + road.getSecondCityName () + "?" + "\nCost : " + Util.printIntValue(road.distance * RoadButton.ROADMONEY) + "\nEstimated Time : " + (road.distance * RoadButton.ROADTIME) + "sec";
 	}
 
 	public void setRoad(Road r){

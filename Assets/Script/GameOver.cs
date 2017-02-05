@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Util.popup = true;
-		infoText.text = "인구수 : " + Country.getPopulation () + "\nGDP : " + Country.getAvgGDP () + "\n미세먼지 농도 : " + Country.getAvgEnvironment () + "\n지지율 : " + Country.getAvgApprRate ();
+		infoText.text = "Population : " + Country.getPopulation () + "\nGDP : " + Country.getAvgGDP () + "\nFine Dust Concentration : " + Country.getAvgEnvironment () + "\nApproval Rating : " + Country.getAvgApprRate ();
 	}
 	
 	// Update is called once per frame

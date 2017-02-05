@@ -22,8 +22,8 @@ public class CityDetail : MonoBehaviour {
 
 	public void textUpdate(){
 		title.text = thisCity.getTitleName ();
-		info1.text = "Population : " + Util.printIntValue((int)(thisCity.getPopulation ())) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ()) + " ($)";
-		info2.text = printIndustry(thisCity.getDevValue()) + "\nInvestment Capital : " + Util.printIntValue(thisCity.getInvestment()) + "\nMineral Deposit : " + thisCity.getResource() + " t" + "\nFine Dust Concentration : " + thisCity.getEnvironment() + "\nApproval Rating : " + thisCity.getApprRate() + "%\n세율 : " + thisCity.getTaxRate() + "%";
+		info1.text = "Population : " + Util.printIntValue((int)(thisCity.getPopulation ())) + "\nGDP : " + Util.printIntValue(thisCity.getGDP ());
+		info2.text = printIndustry(thisCity.getDevValue()) + "\nInvestment Capital : " + Util.printIntValue(thisCity.getInvestment()) + "\nMineral Deposit : " + thisCity.getResource() + " t" + "\nFine Dust Concentration : " + thisCity.getEnvironment() + "\nApproval Rating : " + thisCity.getApprRate() + "%\nTax Rate : " + thisCity.getTaxRate() + "%";
 	}
 
 	public void imageUpdate(){
@@ -44,13 +44,13 @@ public class CityDetail : MonoBehaviour {
 
 	private string printIndustry(int n){
 		if (n <= 25) {
-			return "농/어업 중심 산업";
+			return "Agriculture";
 		} else if (n <= 50) {
-			return "섬유/가발 중심 경공업";
+			return "Light Industry";
 		} else if (n <= 75) {
-			return "중공업";
+			return "Heavy Industry";
 		} else {
-			return "첨단산업";
+			return "High-tech Industry";
 		}
 	}
 }
