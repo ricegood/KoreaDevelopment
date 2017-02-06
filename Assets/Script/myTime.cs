@@ -80,7 +80,7 @@ public class myTime : MonoBehaviour {
 		timeStop = true;
 		gameClearPanel.SetActive (true);
 		Util.popup = true;
-		Util.record (Character.getOrder (), Character.getName (), Country.getPopulation (), Country.getAvgGDP (), Country.getAvgEnvironment (), Country.getAvgApprRate (), true);
+		Util.record (Character.getOrder (), Character.getName (), Country.getPopulation (), Country.getSumGDP (), Country.getAvgEnvironment (), Country.getAvgApprRate (), true);
 
 	}
 

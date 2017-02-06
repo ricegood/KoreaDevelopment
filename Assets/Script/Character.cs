@@ -8,10 +8,12 @@ public class Character : MonoBehaviour {
 	private static int level;	// 0: easy, 1: inter, 2: hard
 
 	public static int getLevel(){
+		level = PlayerPrefs.GetInt ("level");
 		return level;
 	}
 
 	public static int getOrder(){
+		order = PlayerPrefs.GetInt ("order");
 		return order;
 	}
 	/*

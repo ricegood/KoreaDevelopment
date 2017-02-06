@@ -13,6 +13,7 @@ public class Country : MonoBehaviour {
 	private static int money;
 
 	private static int avgDevValue;
+	private static int sumDevValue;
 	private static int population;
 	private static int avgApprRate;
 	private static int avgEnvironment;
@@ -29,8 +30,9 @@ public class Country : MonoBehaviour {
 	void Update () {
 		if (!myTime.timeStop) {
 			population = getPop (map.city);
+			sumDevValue = getSumDevValue (map.city);
 			avgApprRate = sumApprRate (map.city) / population;
-			avgDevValue = sumDevValue (map.city) / population;
+			avgDevValue = sumDevValue / population;
 			avgEnvironment = sumEnvironment (map.city) / map.city.Length;
 
 			switch (Character.getLevel ()) {
@@ -72,6 +74,10 @@ public class Country : MonoBehaviour {
 		return avgDevValue * 1000;
 	}
 
+	public static int getSumGDP(){
+		return sumDevValue*1000;
+	}
+
 	public static int getPopulation(){
 		return population;
 	}
@@ -80,7 +86,7 @@ public class Country : MonoBehaviour {
 		myTime.timeStop = true;
 		GameOverPanel.SetActive (true);
 		Util.popup = true;
-		Util.record (Character.getOrder (), Character.getName (), getPopulation (), getAvgGDP (), getAvgEnvironment (), getAvgApprRate (), false);
+		Util.record (Character.getOrder (), Character.getName (), getPopulation (), getSumGDP (), getAvgEnvironment (), getAvgApprRate (), false);
 	}
 
 	private int getPop(GameObject[] cityList){
@@ -110,11 +116,11 @@ public class Country : MonoBehaviour {
 		return sum;
 	}
 
-	private int sumDevValue(GameObject[] cityList){
+	private int getSumDevValue(GameObject[] cityList){
 		int sum = 0;
 		for(int i=0; i<cityList.Length; i++){
 			City thisCity = cityList [i].GetComponent<City> ();
-			sum += (int)thisCity.getPopulation ()*thisCity.getDevValue();
+			sum += (int)thisCity.getDevValue();
 		}
 		return sum;
 	}

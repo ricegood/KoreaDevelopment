@@ -66,7 +66,6 @@ public class City : MonoBehaviour {
 		//delta value
 		dDevValue = devValue - prevDevValue;
 		dEnvironment = environment - prevEnvironment;
-		Debug.Log ("env : " + environment + " , preenv; " + prevEnvironment);
 		dTaxRate = taxRate - prevTaxRate;
 		Debug.Log (myname + " delta value : " + dDevValue + " / " + dEnvironment + " / " + dTaxRate);
 	}
@@ -167,7 +166,7 @@ public class City : MonoBehaviour {
 			// Open the Detail Panel
 			if (!RoadButton.roadPopup) {
 				click.Play ();
-				detailPanel.GetComponent<CityDetail> ().setCity (this.GetComponent<City> ());
+				detailPanel.GetComponent<CityDetail> ().setCity (this);
 				detailPanel.GetComponent<CityDetail> ().imageUpdate ();
 				detailPanel.GetComponent<CityDetail> ().textUpdate ();
 				detailPanel.SetActive (true);
@@ -393,7 +392,11 @@ public class City : MonoBehaviour {
 	private void setApprRate(int devValue, int taxRate, int environment){
 		int result;
 
-		result = (int)(50 + (devValue * 0.02) - Math.Pow(taxRate, 1.3) - environment*0.15);
+		if (taxRate >= 0) {
+			result = (int)(50 + (devValue * 0.02) - Math.Pow (taxRate, 1.25) - environment * 0.15);
+		} else {
+			result = (int)(50 + (devValue * 0.02) + Math.Pow (-taxRate, 1.25) - environment * 0.15);
+		}
 
 		if (result < 0) {
 			apprRate = 0;
@@ -415,8 +418,9 @@ public class City : MonoBehaviour {
 	/********************************************/
 
 	private void load(){
-		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "DevValue"))
+		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "DevValue")) {
 			devValue = PlayerPrefs.GetInt (Character.getOrder () + myname + "DevValue");
+		}
 		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "DevValue")) {
 			devValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
 			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "DevValue", devValue);
@@ -438,8 +442,9 @@ public class City : MonoBehaviour {
 			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "Environment", environment);
 		}
 				
-		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "TaxRate"))
+		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "TaxRate")) {
 			taxRate = PlayerPrefs.GetInt (Character.getOrder () + myname + "TaxRate");
+		}
 		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "TaxRate")) {
 			taxRate = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "TaxRate");
 			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "TaxRate", taxRate);

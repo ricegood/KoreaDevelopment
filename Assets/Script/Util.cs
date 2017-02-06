@@ -10,6 +10,10 @@ public class Util : MonoBehaviour {
 	private int DEFAULT_MONEY;
 
 	void Start(){
+		popup = false;
+		myTime.timeStop = false;
+		RoadButton.roadPopup = false;
+
 		Debug.Log(PlayerPrefs.GetInt ("order"));
 		order = PlayerPrefs.GetInt ("order");
 		Screen.SetResolution(900, 1600, true); 
@@ -28,6 +32,10 @@ public class Util : MonoBehaviour {
 	}
 
 	public void moveScene(string scene){
+		popup = false;
+		myTime.timeStop = false;
+		RoadButton.roadPopup = false;
+
 		SceneManager.LoadScene(scene);
 	}
 
@@ -60,6 +68,10 @@ public class Util : MonoBehaviour {
 		Character.setOrder (order+1);
 		Character.setName (name);
 		Country.setMoney (DEFAULT_MONEY);
+	}
+
+	public void increaseOrder(){
+		Character.setOrder (order+1);
 	}
 
 	public static void setText(Text t, string s){

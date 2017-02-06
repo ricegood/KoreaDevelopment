@@ -20,8 +20,10 @@ public class Achieve : MonoBehaviour {
 	public City city1;
 	public City city2;
 	public int treeGoal;
-	public int gdpGoal;
+	public float gdpGoalRate;
 	public int apprRateGoal;
+
+	private int prevGdpSum;
 
 	private bool complete;
 	private bool getReward;
@@ -29,8 +31,21 @@ public class Achieve : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		complete = (PlayerPrefs.GetString ("achievement" + index) == "True");
-		getReward = (PlayerPrefs.GetString ("achievementGetReward" + index) == "True");
+		if (Character.getOrder () == 1) {
+			prevGdpSum = 704000;
+		} else {
+			prevGdpSum = PlayerPrefs.GetInt (Character.getOrder() - 1 + "GDP");
+		}
+			
+		if (type == 3 || type == 4) {
+			// GDP , apprRate
+			complete = (PlayerPrefs.GetString (Character.getOrder() + "achievement" + index) == "True");
+			getReward = (PlayerPrefs.GetString (Character.getOrder() + "achievementGetReward" + index) == "True");
+		} else {
+			complete = (PlayerPrefs.GetString ("achievement" + index) == "True");
+			getReward = (PlayerPrefs.GetString ("achievementGetReward" + index) == "True");
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -50,15 +65,15 @@ public class Achieve : MonoBehaviour {
 				}
 				break;
 			case GDP:
-				if (Country.getAvgGDP() >= gdpGoal) {
+				if (Country.getSumGDP() >= prevGdpSum*gdpGoalRate) {
 					complete = true;
-					PlayerPrefs.SetString("achievement"+index, complete.ToString());
+					PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
 				}
 				break;
 			case APPRRATE:
 				if (Country.getAvgApprRate() >= apprRateGoal) {
 					complete = true;
-					PlayerPrefs.SetString("achievement"+index, complete.ToString());
+					PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
 				}
 				break;
 			}
@@ -75,7 +90,11 @@ public class Achieve : MonoBehaviour {
 		}
 		else{
 			getReward = true;
-			PlayerPrefs.SetString ("achievementGetReward" + index, getReward.ToString());
+			if (type == 3 || type == 4) {
+				PlayerPrefs.SetString (Character.getOrder() + "achievementGetReward" + index, getReward.ToString ());
+			} else {
+				PlayerPrefs.SetString ("achievementGetReward" + index, getReward.ToString ());
+			}
 			rewardText.text = Util.printIntValue(reward) +" has been added to the budget as a reward!" ;
 			Country.setMoney (Country.getMoney () + reward);
 		}
