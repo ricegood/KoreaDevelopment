@@ -62,6 +62,7 @@ public class Map : MonoBehaviour {
 	public static Road getRoad(City a, City b){
 		for (int i = 0; i < a.roadList.Length; i++) {
 			if (b == a.roadList [i].GetComponent<Road> ().getAdgacencyCity (a)) {
+				// error
 				return a.roadList [i].GetComponent<Road> ();
 			}
 		}
