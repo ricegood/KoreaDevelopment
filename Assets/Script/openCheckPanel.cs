@@ -5,7 +5,7 @@ using System.Collections;
 public class openCheckPanel : MonoBehaviour {
 	public RoadButton roadButton;
 	public Text text;
-	private Road road;
+	private static Road road;
 	// Use this for initialization
 	void Start () {
 	

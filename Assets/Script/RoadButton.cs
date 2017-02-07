@@ -6,6 +6,7 @@ public class RoadButton : MonoBehaviour {
 	public const int ROADMONEY = 5000;	// per 1 distance
 	public const int ROADTIME = 5; // sec per 1 distance
 
+	public Map map;
 	public GameObject moneyPanel;
 	public GameObject thisObject;
 	public Text timeText;
@@ -45,8 +46,10 @@ public class RoadButton : MonoBehaviour {
 				isRoadBuilding = false;
 				PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString ());
 
+				Debug.Log ("buildingRoadName1 : " + buildingRoadName1 + ", buildingRoadName2 : " + buildingRoadName2);
 				// road completed!
-				Road thisRoad = Map.getRoad (buildingRoadName1, buildingRoadName2);
+				Road thisRoad = map.getRoad (buildingRoadName1, buildingRoadName2);
+
 				thisRoad.setCompleted (true);
 				thisRoad.getFirstCity().setRoadNum (thisRoad.getFirstCity().roadList);
 				thisRoad.getSecondCity().setRoadNum (thisRoad.getSecondCity().roadList);

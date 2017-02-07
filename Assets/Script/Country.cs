@@ -20,9 +20,6 @@ public class Country : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (!PlayerPrefs.HasKey("order")) {
-			SceneManager.LoadScene("Intro");
-		}
 		load ();
 	}
 

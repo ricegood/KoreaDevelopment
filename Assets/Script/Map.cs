@@ -60,6 +60,11 @@ public class Map : MonoBehaviour {
 	}
 
 	public static Road getRoad(City a, City b){
+		Debug.Log ("kv Key = " + a.titleName + ", kv Value = " + b.titleName);
+		if (a.roadList [0] == null)
+			Debug.Log ("a roadList[0] is null");
+		if (a.openCheckPanel == null)
+			Debug.Log ("a openCheckPanel is null");
 		for (int i = 0; i < a.roadList.Length; i++) {
 			if (b == a.roadList [i].GetComponent<Road> ().getAdgacencyCity (a)) {
 				// error
@@ -75,18 +80,35 @@ public class Map : MonoBehaviour {
 		}
 	}
 		
-	public static Road getRoad(string cityName1, string cityName2){
+	public Road getRoad(string cityName1, string cityName2){
+		for (int i = 0; i < city.Length; i++) {
+			City thisCity = city [i].GetComponent<City> ();
+			if (thisCity.titleName == cityName1) {
+				for (int j = 0; j < thisCity.roadList.Length; j++) {
+					Road thisRoad = thisCity.roadList [j].GetComponent<Road> ();
+					if (thisRoad.getAdgacencyCity (thisCity).titleName == cityName2)
+						return thisRoad;
+				}
+			}
+		}
+
+		return null;
+		/*
+		Debug.Log ("getRoad cityName1 : " + cityName1 + ", cityName2 : " + cityName2);
 		foreach(KeyValuePair<City, List<City>> kv in linkableGraph) 
 		{
 			if (kv.Key.titleName == cityName1) {
 				for (int i = 0; i < kv.Value.Count; i++) {
-					if (kv.Value [i].titleName == cityName2) {
+					if (kv.Value [i].titleName == cityName2) {;
+						if (kv.Key.roadList [0] == null)
+							Debug.Log ("this is null");
 						return getRoad (kv.Key, kv.Value [i]);
 					}
 				}
 			}
 		}
 		return null;
+		*/
 	}
 
 	// load graph
