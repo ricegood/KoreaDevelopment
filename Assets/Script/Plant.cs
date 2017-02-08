@@ -94,7 +94,7 @@ public class Plant : MonoBehaviour {
 	}
 
 	public void textUpdate(){
-		text.text = "Determine the number of trees to plant.\n\n" + treeNum + "\n\nCost : " + Util.printIntValue((treeNum / 1000) * TREEMONEY) + "\nEstimated Time : " + ((treeNum / 1000) * TREETIME) + "s";
+		text.text = "Plant how many trees?\n\n" + treeNum + "\n\nCost : " + Util.printIntValue((treeNum / 1000) * TREEMONEY) + "\nEstimated Time : " + ((treeNum / 1000) * TREETIME) + "s";
 	}
 
 	public void textReset(){

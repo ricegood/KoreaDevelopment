@@ -43,11 +43,11 @@ public class CityDetail : MonoBehaviour {
 	}
 
 	private string printIndustry(int n){
-		if (n <= 25) {
+		if (n <= 100) {
 			return "Agriculture";
-		} else if (n <= 50) {
+		} else if (n <= 400) {
 			return "Light Industry";
-		} else if (n <= 75) {
+		} else if (n <= 1000) {
 			return "Heavy Industry";
 		} else {
 			return "High-tech Industry";
