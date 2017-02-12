@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Quit.cs" />
      <Compile Include="Assets\Resolution\Game\GameMgr.cs" />
      <Compile Include="Assets\Script\Achieve.cs" />
      <Compile Include="Assets\Script\Character.cs" />

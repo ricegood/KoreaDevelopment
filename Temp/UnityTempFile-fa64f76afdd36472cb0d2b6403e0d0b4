@@ -80,7 +80,7 @@
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
 -define:UNITY_TEAM_LICENSE
-'Assets/IntroManager.cs'
+'Assets/Quit.cs'
 'Assets/Resolution/Game/GameMgr.cs'
 'Assets/Script/Achieve.cs'
 'Assets/Script/Character.cs'
