@@ -8,6 +8,8 @@ public class City : MonoBehaviour {
 	private const int MININGMONEY = 50000;
 	private const int MININGPROFIT = 50000; // per 1t.
 	private const int MININGTIME = 5; // required time for mining (sec)
+	private const int POPMIN = 1000;
+	private const int POPMAX = 5000;
 
 	public string myname;
 	public string titleName;
@@ -25,7 +27,7 @@ public class City : MonoBehaviour {
 	public AudioSource click;
 
 	private int devValue;		// GDP
-	private float population = 2000; // initial value
+	private float population; // initial value
 	private int apprRate = 50;	// 0~100 (%) initial value
 	private int investment = 0; // initial value
 	private float resource;		// unit : [t]
@@ -60,6 +62,8 @@ public class City : MonoBehaviour {
 		prevDevValue = initDevValue;
 		resource = initResource;
 		savedMonth = myTime.getMonth ();
+		System.Random rnd = new System.Random();
+		population = rnd.Next(POPMIN, POPMAX); // population number initialization
 		setRoadNum(roadList);
 		load ();
 
