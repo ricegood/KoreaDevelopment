@@ -31,6 +31,13 @@ public class Util : MonoBehaviour {
 		PlayerPrefs.SetInt (order + "Year", myTime.getYear ());
 	}
 
+	public void gameStart(){
+		if (!PlayerPrefs.HasKey("order")) {
+			SceneManager.LoadScene("Intro");
+		}
+		else SceneManager.LoadScene("Main");
+	}
+
 	public void moveScene(string scene){
 		popup = false;
 		myTime.timeStop = false;
