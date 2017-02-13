@@ -11,7 +11,7 @@ public class Info : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		myText = getOrder(Character.getOrder()) + " " + Character.getName ();
+		myText = getOrder(Character.getOrder()) + " President: " + Character.getName ();
 		Util.setText (this.GetComponent<Text>(), myText);
 	}
 
