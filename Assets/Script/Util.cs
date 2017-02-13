@@ -36,13 +36,6 @@ public class Util : MonoBehaviour {
 		Application.Quit();
 	}
 
-	public void gameStart(){
-		if (!PlayerPrefs.HasKey("order")) {
-			SceneManager.LoadScene("Intro");
-		}
-		else SceneManager.LoadScene("Main");
-	}
-
 	public void moveScene(string scene){
 		popup = false;
 		myTime.timeStop = false;
