@@ -16,7 +16,7 @@ public class Util : MonoBehaviour {
 
 		Debug.Log(PlayerPrefs.GetInt ("order"));
 		order = PlayerPrefs.GetInt ("order");
-		Screen.SetResolution(900, 1600, true); 
+		//Screen.SetResolution(900, 1600, true); 
 	}
 
 	public static void record(int order, string name, int population, int GDP, int environment, int apprRate, bool clear){
