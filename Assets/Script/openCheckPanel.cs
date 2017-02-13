@@ -17,7 +17,7 @@ public class openCheckPanel : MonoBehaviour {
 	}
 
 	public void updateText(){
-		text.text = "Construct a road from " + road.getFirstCityName () + " to " + road.getSecondCityName () + "?" + "\nCost : " + Util.printIntValue(road.distance * RoadButton.ROADMONEY) + "\nEstimated Time : " + (road.distance * RoadButton.ROADTIME) + "sec";
+		text.text = "Construct a road from " + road.getFirstCityName () + " to " + road.getSecondCityName () + "?" + "\n\nCost : " + Util.printIntValue(road.distance * RoadButton.ROADMONEY) + "\nEstimated Time : " + (road.distance * RoadButton.ROADTIME) + "sec";
 	}
 
 	public void setRoad(Road r){
