@@ -28,6 +28,7 @@ public class CityDetail : MonoBehaviour {
 
 	public void imageUpdate(){
 		mapImage.sprite = thisCity.map.sprite;
+		mapImage.rectTransform.sizeDelta = new Vector2(thisCity.map.sprite.rect.width, thisCity.map.sprite.rect.height);
 	}
 
 	public void setCity(City city){
