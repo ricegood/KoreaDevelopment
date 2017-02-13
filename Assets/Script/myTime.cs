@@ -15,7 +15,7 @@ public class myTime : MonoBehaviour {
 
 	public static bool timeStop;
 
-	private const int SEC = 10; // after 5 seconds, 1 month passed.
+	private const int SEC = 1; // after 5 seconds, 1 month passed.
 
 	// Use this for initialization
 	void Start () {
@@ -76,7 +76,7 @@ public class myTime : MonoBehaviour {
 	public void gameClear(){
 		Debug.Log("GAME CLEAR!");
 		Debug.Log ("avgApprRate = " + Country.getAvgApprRate());
-		Debug.Log ("avgDevValue = " + Country.getAvgDevValue());
+		Debug.Log ("sumGDPValue = " + Country.getSumGDP());
 		timeStop = true;
 		gameClearPanel.SetActive (true);
 		Util.popup = true;

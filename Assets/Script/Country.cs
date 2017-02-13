@@ -12,7 +12,6 @@ public class Country : MonoBehaviour {
 	public GameObject GameOverPanel;
 	private static int money;
 
-	private static int avgDevValue;
 	private static int sumDevValue;
 	private static int population;
 	private static int avgApprRate;
@@ -21,6 +20,10 @@ public class Country : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		load ();
+		population = getPop (map.city);
+		sumDevValue = getSumDevValue (map.city);
+		avgApprRate = sumApprRate (map.city) / population;
+		avgEnvironment = sumEnvironment (map.city) / map.city.Length;
 	}
 
 	// Update is called once per frame
@@ -29,7 +32,6 @@ public class Country : MonoBehaviour {
 			population = getPop (map.city);
 			sumDevValue = getSumDevValue (map.city);
 			avgApprRate = sumApprRate (map.city) / population;
-			avgDevValue = sumDevValue / population;
 			avgEnvironment = sumEnvironment (map.city) / map.city.Length;
 
 			switch (Character.getLevel ()) {
@@ -61,14 +63,6 @@ public class Country : MonoBehaviour {
 
 	public static int getAvgEnvironment(){
 		return avgEnvironment;
-	}
-
-	public static int getAvgDevValue(){
-		return avgDevValue;
-	}
-
-	public static int getAvgGDP(){
-		return avgDevValue * 1000;
 	}
 
 	public static int getSumGDP(){
