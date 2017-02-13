@@ -23,4 +23,5 @@ public class Story : MonoBehaviour {
 			SceneManager.LoadScene ("Main");
 		}
 	}
+
 }
