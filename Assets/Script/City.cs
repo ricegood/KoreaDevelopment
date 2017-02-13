@@ -42,6 +42,7 @@ public class City : MonoBehaviour {
 	private int dDevValue;
 	private int dEnvironment;
 	private int dTaxRate;
+	private float dResource;
 
 	private bool isMining;
 	private float miningEndTime;
@@ -68,6 +69,7 @@ public class City : MonoBehaviour {
 		load ();
 
 		//delta value
+		dResource = initResource - resource;
 		dDevValue = devValue - prevDevValue;
 		dEnvironment = environment - prevEnvironment;
 		dTaxRate = taxRate - prevTaxRate;
@@ -86,7 +88,9 @@ public class City : MonoBehaviour {
 
 			/* <! ------ Value Update Start --------> */
 			setDevValue (initDevValue, population, investment, roadNumber);
-			setEnvironment (investment, roadNumber, resource, treeNumber);
+
+			dResource = initResource - resource;
+			setEnvironment (investment, roadNumber, dResource, treeNumber);
 
 			dDevValue = devValue - prevDevValue;
 			dEnvironment = environment - prevEnvironment;
@@ -373,8 +377,8 @@ public class City : MonoBehaviour {
 		PlayerPrefs.SetFloat (myname + "Population", population);
 	}
 
-	private void setEnvironment(int investment, int roadNumber, float resource, int treeNumber){
-		int result = (int)(investment*0.0004 + roadNumber*10 - resource*0.05) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
+	private void setEnvironment(int investment, int roadNumber, float dResource, int treeNumber){
+		int result = (int)(investment*0.0004 + roadNumber*10 + dResource*2) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
 
 		if (result < 0) {
 			environment = 0;
