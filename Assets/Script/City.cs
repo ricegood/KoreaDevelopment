@@ -73,7 +73,7 @@ public class City : MonoBehaviour {
 		dDevValue = devValue - prevDevValue;
 		dEnvironment = environment - prevEnvironment;
 		dTaxRate = taxRate - prevTaxRate;
-		Debug.Log (myname + " delta value : " + dDevValue + " / " + dEnvironment + " / " + dTaxRate);
+		//Debug.Log (myname + " delta value : " + dDevValue + " / " + dEnvironment + " / " + dTaxRate);
 	}
 
 	// Update is called once per frame
@@ -341,7 +341,7 @@ public class City : MonoBehaviour {
 			}
 		} else {
 			// already mining
-			Debug.Log("Already Mining.");
+			//Debug.Log("Already Mining.");
 		}
 	}
 

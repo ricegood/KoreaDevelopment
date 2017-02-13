@@ -26,23 +26,5 @@ public class Fade : MonoBehaviour {
 			thisText.color = new Color (1f, 1f, 1f, now / 2);
 			NextButton.color = new Color (1f, 1f, 1f, now / 2);
 		}
-
-		/*
-		else if (now >= 3 && end < 3) {
-			end += Time.deltaTime;
-			thisText.color = new Color (1f, 1f, 1f, 1 - end/2);
-			NextButton.color = new Color (1f, 1f, 1f, 1 - end/2);
-		}
-
-		else if (end >= 3) {
-			if (nextScene != "") {
-				SceneManager.LoadScene ("Main");
-			} else {
-				Story.page++;
-				thisObject.SetActive (false);
-				nextObject.SetActive (true);
-			}
-		}
-		*/
 	}
 }

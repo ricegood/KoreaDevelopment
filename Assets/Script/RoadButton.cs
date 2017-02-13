@@ -46,7 +46,7 @@ public class RoadButton : MonoBehaviour {
 				isRoadBuilding = false;
 				PlayerPrefs.SetString ("isRoadBuilding", isRoadBuilding.ToString ());
 
-				Debug.Log ("buildingRoadName1 : " + buildingRoadName1 + ", buildingRoadName2 : " + buildingRoadName2);
+				//Debug.Log ("buildingRoadName1 : " + buildingRoadName1 + ", buildingRoadName2 : " + buildingRoadName2);
 				// road completed!
 				Road thisRoad = map.getRoad (buildingRoadName1, buildingRoadName2);
 
@@ -85,7 +85,7 @@ public class RoadButton : MonoBehaviour {
 			}
 		} else {
 			// already mining
-			Debug.Log("Already Building. && Builded");
+			//Debug.Log("Already Building. && Builded");
 		}
 	}
 
