@@ -20,10 +20,10 @@ public class myTime : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		prevMonth = ((int)(now / SEC) % 12) + 1;
-		prevYear = ((int)(now / SEC) / 12) + 2020;
+		prevYear = ((int)(now / SEC) / 12) + 2050;
 		load ();
 		month = ((int)(now / SEC) % 12) + 1;
-		year = ((int)(now / SEC) / 12) + 2020;
+		year = ((int)(now / SEC) / 12) + 2050;
 		timeText.text = printMonth(month) + " " + year.ToString ();
 	}
 
@@ -32,7 +32,7 @@ public class myTime : MonoBehaviour {
 		if (!timeStop) {
 			now += Time.deltaTime;
 			month = ((int)(now / SEC) % 12) + 1;
-			year = ((int)(now / SEC) / 12) + 2020;
+			year = ((int)(now / SEC) / 12) + 2050;
 			timeText.text = printMonth(month) + " " + year.ToString ();
 			save ();
 
