@@ -6,7 +6,7 @@ using System;
 public class City : MonoBehaviour {
 	private const int INVESTMONEY = 10000;
 	private const int MININGMONEY = 50000;
-	private const int MININGPROFIT = 50000; // per 1t.
+	private const int MININGPROFIT = 50000; // per 1kt.
 	private const int MININGTIME = 5; // required time for mining (sec)
 	private const int POPMIN = 1000;
 	private const int POPMAX = 5000;
@@ -107,7 +107,7 @@ public class City : MonoBehaviour {
 				PlayerPrefs.SetString (myname + "IsMining", isMining.ToString ());
 
 				// get profit
-				Country.setMoney (Country.getMoney () + (int)((initResource * 0.1f) * MININGPROFIT));
+				Country.setMoney (Country.getMoney () + (int)(10 * MININGPROFIT));
 			}
 
 			// Map Color Update
@@ -153,8 +153,8 @@ public class City : MonoBehaviour {
 				map.color = new Color (1f, 0.55f, 0.55f, 1f);
 				apprRateText.text = (int)(miningEndTime - myTime.getNow ()) + "s";
 			} else {
-				apprRateText.text = resource+"t";
-				map.color = new Color (1 - (float)((float)resource / 100) * 0.7f, 1 - (float)((float)resource / 100) * 0.7f, 1 - (float)((float)resource / 100) * 0.7f, 1f);
+				apprRateText.text = resource+"kt";
+				map.color = new Color (1 - (float)((float)resource / 160) * 0.7f, 1 - (float)((float)resource / 160) * 0.7f, 1 - (float)((float)resource / 160) * 0.7f, 1f);
 			}
 			break;
 		case Map.ENVIRONMENT:
@@ -321,7 +321,8 @@ public class City : MonoBehaviour {
 			if (Country.setMoney (Country.getMoney () - MININGMONEY)) {
 				if (resource > 0) {
 					// have resource
-					resource -= initResource * 0.1f;
+					// resource -= initResource * 0.1f;
+					resource -= 10;
 					if (resource <= 0) resource = 0;
 					PlayerPrefs.SetString (myname + "Resource", resource.ToString());
 					isMining = true;
@@ -378,7 +379,7 @@ public class City : MonoBehaviour {
 	}
 
 	private void setEnvironment(int investment, int roadNumber, float dResource, int treeNumber){
-		int result = (int)(investment*0.0004 + roadNumber*10 + dResource*2) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
+		int result = (int)(investment*0.0004 + roadNumber*10 + dResource) - (int)(treeNumber / 1000) * Plant.TREEVALUE;
 
 		if (result < 0) {
 			environment = 0;
