@@ -6,7 +6,7 @@ using System;
 public class City : MonoBehaviour {
 	private const int INVESTMONEY = 10000;
 	private const int MININGMONEY = 50000;
-	private const int MININGPROFIT = 50000; // per 1kt.
+	private const int MININGPROFIT = 10000; // per 1kt.
 	private const int MININGTIME = 5; // required time for mining (sec)
 	private const int POPMIN = 1000;
 	private const int POPMAX = 5000;
@@ -54,6 +54,7 @@ public class City : MonoBehaviour {
 
 	private int savedMonth;
 	private static int treeNumber;
+	private int order;
 
 
 
@@ -301,14 +302,14 @@ public class City : MonoBehaviour {
 	public void increaseTaxRate(){
 		if (taxRate < 100) {
 			taxRate++;
-			PlayerPrefs.SetInt (Character.order + myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (order + myname + "TaxRate", taxRate);
 		}
 	}
 
 	public void decreaseTaxRate(){
 		if (taxRate > 0) {
 			taxRate--;
-			PlayerPrefs.SetInt (Character.order + myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (order + myname + "TaxRate", taxRate);
 		}
 	}
 		
@@ -390,19 +391,19 @@ public class City : MonoBehaviour {
 
 		if (result < 0) {
 			environment = 0;
-			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
+			PlayerPrefs.SetInt (order + myname + "Environment", environment);
 		} else if (result > 200) {
 			environment = 200;
-			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
+			PlayerPrefs.SetInt (order + myname + "Environment", environment);
 		} else{
 			environment = result;
-			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
+			PlayerPrefs.SetInt (order + myname + "Environment", environment);
 		}
 	}
 
 	private void setDevValue(int initDevValue, float population, int investment, int roadNumber){
 		devValue = initDevValue + (int)(population * 0.05 + investment * 0.5 + roadNumber * 7500) / 100;
-		PlayerPrefs.SetInt (Character.order + myname + "DevValue", devValue);
+		PlayerPrefs.SetInt (order + myname + "DevValue", devValue);
 	}
 
 	private void setApprRate(int devValue, int taxRate, int environment){
@@ -434,12 +435,14 @@ public class City : MonoBehaviour {
 	/********************************************/
 
 	private void load(){
-		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "DevValue")) {
-			devValue = PlayerPrefs.GetInt (Character.getOrder () + myname + "DevValue");
+		order = PlayerPrefs.GetInt ("order");
+
+		if (PlayerPrefs.HasKey (order + myname + "DevValue")) {
+			devValue = PlayerPrefs.GetInt (order + myname + "DevValue");
 		}
-		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "DevValue")) {
-			devValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
-			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "DevValue", devValue);
+		else if (PlayerPrefs.HasKey ((order - 1) + myname + "DevValue")) {
+			devValue = PlayerPrefs.GetInt ((order - 1) + myname + "DevValue");
+			PlayerPrefs.SetInt (order + myname + "DevValue", devValue);
 		}
 				
 		if(PlayerPrefs.HasKey(myname + "Population"))
@@ -451,33 +454,33 @@ public class City : MonoBehaviour {
 		if(PlayerPrefs.HasKey(myname + "Resource"))
 			resource = Util.GetFloat(PlayerPrefs.GetString (myname + "Resource"), 0.0f);
 		
-		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "Environment"))
-			environment = PlayerPrefs.GetInt (Character.getOrder () + myname + "Environment");
-		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "Environment")) {
-			environment = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "Environment");
-			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "Environment", environment);
+		if (PlayerPrefs.HasKey (order + myname + "Environment"))
+			environment = PlayerPrefs.GetInt (order + myname + "Environment");
+		else if (PlayerPrefs.HasKey ((order - 1) + myname + "Environment")) {
+			environment = PlayerPrefs.GetInt ((order - 1) + myname + "Environment");
+			PlayerPrefs.SetInt (order + myname + "Environment", environment);
 		}
 				
-		if (PlayerPrefs.HasKey (Character.getOrder () + myname + "TaxRate")) {
-			taxRate = PlayerPrefs.GetInt (Character.getOrder () + myname + "TaxRate");
+		if (PlayerPrefs.HasKey (order + myname + "TaxRate")) {
+			taxRate = PlayerPrefs.GetInt (order + myname + "TaxRate");
 		}
-		else if (PlayerPrefs.HasKey ((Character.getOrder () - 1) + myname + "TaxRate")) {
-			taxRate = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "TaxRate");
-			PlayerPrefs.SetInt ((Character.getOrder ()) + myname + "TaxRate", taxRate);
+		else if (PlayerPrefs.HasKey ((order - 1) + myname + "TaxRate")) {
+			taxRate = PlayerPrefs.GetInt ((order - 1) + myname + "TaxRate");
+			PlayerPrefs.SetInt (order + myname + "TaxRate", taxRate);
 		}
 		
 		isMining = (PlayerPrefs.GetString (myname + "IsMining") == "True");
 		miningEndTime = Util.GetFloat (PlayerPrefs.GetString (myname + "MiningEndTime"), 0.0f);
 		treeNumber = PlayerPrefs.GetInt ("TreeNumber");
 
-		if (PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "DevValue"))
-			prevDevValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
+		if (PlayerPrefs.HasKey ((order-1) + myname + "DevValue"))
+			prevDevValue = PlayerPrefs.GetInt ((order - 1) + myname + "DevValue");
 		
-		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "Environment"))
-			prevEnvironment = PlayerPrefs.GetInt((Character.order-1) + myname + "Environment" );
+		if(PlayerPrefs.HasKey ((order-1) + myname + "Environment"))
+			prevEnvironment = PlayerPrefs.GetInt((order - 1) + myname + "Environment" );
 
-		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "TaxRate"))
-			prevTaxRate = PlayerPrefs.GetInt ((Character.order-1) + myname + "TaxRate");
+		if(PlayerPrefs.HasKey ((order-1) + myname + "TaxRate"))
+			prevTaxRate = PlayerPrefs.GetInt ((order-1) + myname + "TaxRate");
 
 	}
 }
