@@ -56,6 +56,7 @@ public class City : MonoBehaviour {
 	private static int treeNumber;
 
 
+
 	// Use this for initialization
 	void Start () {
 		map = this.GetComponent<SpriteRenderer> ();
@@ -76,7 +77,9 @@ public class City : MonoBehaviour {
 		//Debug.Log (myname + " delta value : " + dDevValue + " / " + dEnvironment + " / " + dTaxRate);
 	}
 
+
 	// Update is called once per frame
+
 	void Update () {
 		if (!myTime.timeStop) {
 			
@@ -86,9 +89,9 @@ public class City : MonoBehaviour {
 				Country.setMoney (Country.getMoney () + (int)(((float)taxRate / 100) * devValue * 100));
 			}
 
-			/* <! ------ Value Update Start --------> */
-			setDevValue (initDevValue, population, investment, roadNumber);
 
+			// <! ------ Value Update Start --------> 
+			setDevValue (initDevValue, population, investment, roadNumber);
 			dResource = initResource - resource;
 			setEnvironment (investment, roadNumber, dResource, treeNumber);
 
@@ -98,7 +101,7 @@ public class City : MonoBehaviour {
 
 			setApprRate (dDevValue, dTaxRate, dEnvironment);
 			setPopulation();
-			/* <! ------ Value Update End --------> */
+			// <! ------ Value Update End -------->
 
 
 			// Check the mining
@@ -109,6 +112,7 @@ public class City : MonoBehaviour {
 				// get profit
 				Country.setMoney (Country.getMoney () + (int)(10 * MININGPROFIT));
 			}
+
 
 			// Map Color Update
 			if (!RoadButton.roadPopup) {
@@ -126,9 +130,12 @@ public class City : MonoBehaviour {
 					touchEvent ();
 				}
 			}
+
+
 		}
 
 	}
+
 
 	public void mapColorUpdate(int type){
 		switch (type) {
@@ -294,14 +301,14 @@ public class City : MonoBehaviour {
 	public void increaseTaxRate(){
 		if (taxRate < 100) {
 			taxRate++;
-			PlayerPrefs.SetInt (Character.getOrder() + myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (Character.order + myname + "TaxRate", taxRate);
 		}
 	}
 
 	public void decreaseTaxRate(){
 		if (taxRate > 0) {
 			taxRate--;
-			PlayerPrefs.SetInt (Character.getOrder() + myname + "TaxRate", taxRate);
+			PlayerPrefs.SetInt (Character.order + myname + "TaxRate", taxRate);
 		}
 	}
 		
@@ -383,19 +390,19 @@ public class City : MonoBehaviour {
 
 		if (result < 0) {
 			environment = 0;
-			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
+			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
 		} else if (result > 200) {
 			environment = 200;
-			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
+			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
 		} else{
 			environment = result;
-			PlayerPrefs.SetInt (Character.getOrder() + myname + "Environment", environment);
+			PlayerPrefs.SetInt (Character.order + myname + "Environment", environment);
 		}
 	}
 
 	private void setDevValue(int initDevValue, float population, int investment, int roadNumber){
 		devValue = initDevValue + (int)(population * 0.05 + investment * 0.5 + roadNumber * 7500) / 100;
-		PlayerPrefs.SetInt (Character.getOrder() + myname + "DevValue", devValue);
+		PlayerPrefs.SetInt (Character.order + myname + "DevValue", devValue);
 	}
 
 	private void setApprRate(int devValue, int taxRate, int environment){
@@ -467,10 +474,10 @@ public class City : MonoBehaviour {
 			prevDevValue = PlayerPrefs.GetInt ((Character.getOrder () - 1) + myname + "DevValue");
 		
 		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "Environment"))
-			prevEnvironment = PlayerPrefs.GetInt((Character.getOrder()-1) + myname + "Environment" );
+			prevEnvironment = PlayerPrefs.GetInt((Character.order-1) + myname + "Environment" );
 
 		if(PlayerPrefs.HasKey ((Character.getOrder ()-1) + myname + "TaxRate"))
-			prevTaxRate = PlayerPrefs.GetInt ((Character.getOrder()-1) + myname + "TaxRate");
+			prevTaxRate = PlayerPrefs.GetInt ((Character.order-1) + myname + "TaxRate");
 
 	}
 }

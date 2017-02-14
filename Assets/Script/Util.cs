@@ -14,7 +14,7 @@ public class Util : MonoBehaviour {
 		myTime.timeStop = false;
 		RoadButton.roadPopup = false;
 
-		Debug.Log(PlayerPrefs.GetInt ("order"));
+		//Debug.Log(PlayerPrefs.GetInt ("order"));
 		order = PlayerPrefs.GetInt ("order");
 		//Screen.SetResolution(900, 1600, true); 
 	}

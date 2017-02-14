@@ -50,6 +50,7 @@ public class Achieve : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
 		if (!complete) {
 			switch (type) {
 			case CONNECTION:
@@ -81,6 +82,7 @@ public class Achieve : MonoBehaviour {
 		else {
 			thisObject.interactable = true;
 		}
+
 	}
 
 	public void giveReward(){
