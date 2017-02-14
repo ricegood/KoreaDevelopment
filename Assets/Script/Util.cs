@@ -4,6 +4,8 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Util : MonoBehaviour {
+	public GameObject loadingImage;
+
 	private int order;
 	public static bool popup = false;
 
@@ -41,6 +43,7 @@ public class Util : MonoBehaviour {
 		myTime.timeStop = false;
 		RoadButton.roadPopup = false;
 
+		loadingImage.SetActive (true);
 		SceneManager.LoadScene(scene);
 	}
 

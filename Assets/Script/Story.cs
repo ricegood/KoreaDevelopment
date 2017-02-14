@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Story : MonoBehaviour {
+	public GameObject loadingImage;
 	public Text text;
 	public GameObject[] lines;
 	public static int page;
@@ -20,6 +21,7 @@ public class Story : MonoBehaviour {
 			lines [page++].SetActive (false);
 			lines [page].SetActive (true);
 		} else if (page == 2) {
+			loadingImage.SetActive (true);
 			SceneManager.LoadScene ("Main");
 		}
 	}

@@ -2,8 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 
-using UnityEngine.SceneManagement;
-
 public class Fade : MonoBehaviour {
 
 	public GameObject thisObject;

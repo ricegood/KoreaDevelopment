@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using UnityEngine.SceneManagement;
-
 public class Country : MonoBehaviour {
 	public const int EASY_GAMEOVER_VALUE = 30;
 	public const int INTER_GAMEOVER_VALUE = 35;
