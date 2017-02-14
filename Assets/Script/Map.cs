@@ -29,15 +29,6 @@ public class Map : MonoBehaviour {
 	void Start () {
 		setButtonColor ();
 		loadGraph ();
-
-		/*
-		foreach(KeyValuePair<City, List<City>> kv in graph) 
-		{
-			Debug.Log ("\n" + kv.Key.myname + ": ");
-			for(int i=0; i<kv.Value.Count; i++)
-				Debug.Log(kv.Value[i].myname+" "); 
-		}
-		*/
 	}
 	
 	// Update is called once per frame

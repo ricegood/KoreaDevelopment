@@ -8,6 +8,10 @@ public class Country : MonoBehaviour {
 
 	public Map map;
 	public GameObject GameOverPanel;
+
+	public Achieve[] achievements;
+	public GameObject achieveImage;
+
 	private static int money;
 
 	private static int sumDevValue;
@@ -15,13 +19,17 @@ public class Country : MonoBehaviour {
 	private static int avgApprRate;
 	private static int avgEnvironment;
 
+	private int savedMonth;
+
 	// Use this for initialization
 	void Start () {
 		load ();
+		checkAchievement ();
 		population = getPop (map.city);
 		sumDevValue = getSumDevValue (map.city);
 		avgApprRate = sumApprRate (map.city) / population;
 		avgEnvironment = sumEnvironment (map.city) / map.city.Length;
+		savedMonth = myTime.getMonth ();
 	}
 
 	// Update is called once per frame
@@ -31,6 +39,14 @@ public class Country : MonoBehaviour {
 			sumDevValue = getSumDevValue (map.city);
 			avgApprRate = sumApprRate (map.city) / population;
 			avgEnvironment = sumEnvironment (map.city) / map.city.Length;
+
+			// check the accomplishments every 1 month.
+			if (!Util.popup) {
+				if (savedMonth != myTime.getMonth ()) {
+					savedMonth = myTime.getMonth ();
+					checkAchievement ();
+				}
+			}
 
 			switch (Character.getLevel ()) {
 			case 0:
@@ -76,6 +92,15 @@ public class Country : MonoBehaviour {
 		GameOverPanel.SetActive (true);
 		Util.popup = true;
 		Util.record (Character.getOrder (), Character.getName (), getPopulation (), getSumGDP (), getAvgEnvironment (), getAvgApprRate (), false);
+	}
+
+	private void checkAchievement(){
+		for (int i = 0; i < achievements.Length; i++) {
+			achievements [i].checkComplete ();
+			if (achievements [i].getComplete () && !achievements[i].getGetReward()) {
+				achieveImage.SetActive (true);
+			}
+		}
 	}
 
 	private int getPop(GameObject[] cityList){
@@ -128,9 +153,13 @@ public class Country : MonoBehaviour {
 		}
 	}
 
-	private static void load(){
+	private void load(){
 		Character.load ();
 		money = PlayerPrefs.GetInt ("money");
+
+		for (int i = 0; i < achievements.Length; i++) {
+			achievements [i].load ();
+		}
 	}
 
 }

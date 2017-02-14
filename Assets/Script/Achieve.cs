@@ -31,58 +31,47 @@ public class Achieve : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (Character.getOrder () == 1) {
-			prevGdpSum = 704000;
-		} else {
-			prevGdpSum = PlayerPrefs.GetInt (Character.getOrder() - 1 + "GDP");
-		}
-			
-		if (type == 3 || type == 4) {
-			// GDP , apprRate
-			complete = (PlayerPrefs.GetString (Character.getOrder() + "achievement" + index) == "True");
-			getReward = (PlayerPrefs.GetString (Character.getOrder() + "achievementGetReward" + index) == "True");
-		} else {
-			complete = (PlayerPrefs.GetString ("achievement" + index) == "True");
-			getReward = (PlayerPrefs.GetString ("achievementGetReward" + index) == "True");
-		}
-
+		load ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		if (!complete) {
-			switch (type) {
-			case CONNECTION:
-				if (Map.isLinked (city1, city2)) {
-					complete = true;
-					PlayerPrefs.SetString("achievement"+index, complete.ToString());
-				}
-				break;
-			case TREE:
-				if (City.getTreeNum() >= treeGoal) {
-					complete = true;
-					PlayerPrefs.SetString("achievement"+index, complete.ToString());
-				}
-				break;
-			case GDP:
-				if (Country.getSumGDP() >= prevGdpSum*gdpGoalRate) {
-					complete = true;
-					PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
-				}
-				break;
-			case APPRRATE:
-				if (Country.getAvgApprRate() >= apprRateGoal) {
-					complete = true;
-					PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
-				}
-				break;
-			}
+			checkComplete ();
 		}
 		else {
 			thisObject.interactable = true;
 		}
+	}
 
+	public void checkComplete(){
+		switch (type) {
+		case CONNECTION:
+			if (Map.isLinked (city1, city2)) {
+				complete = true;
+				PlayerPrefs.SetString("achievement"+index, complete.ToString());
+			}
+			break;
+		case TREE:
+			if (City.getTreeNum() >= treeGoal) {
+				complete = true;
+				PlayerPrefs.SetString("achievement"+index, complete.ToString());
+			}
+			break;
+		case GDP:
+			if (Country.getSumGDP() >= prevGdpSum*gdpGoalRate) {
+				complete = true;
+				PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
+			}
+			break;
+		case APPRRATE:
+			if (Country.getAvgApprRate() >= apprRateGoal) {
+				complete = true;
+				PlayerPrefs.SetString(Character.getOrder() + "achievement"+index, complete.ToString());
+			}
+			break;
+		}
 	}
 
 	public void giveReward(){
@@ -100,5 +89,30 @@ public class Achieve : MonoBehaviour {
 			rewardText.text = Util.printIntValue(reward) +" has been added to the budget as a reward!" ;
 			Country.setMoney (Country.getMoney () + reward);
 		}
+	}
+
+	public void load(){
+		if (Character.getOrder () == 1) {
+			prevGdpSum = 704000;
+		} else {
+			prevGdpSum = PlayerPrefs.GetInt (Character.getOrder() - 1 + "GDP");
+		}
+
+		if (type == 3 || type == 4) {
+			// GDP , apprRate
+			complete = (PlayerPrefs.GetString (Character.getOrder() + "achievement" + index) == "True");
+			getReward = (PlayerPrefs.GetString (Character.getOrder() + "achievementGetReward" + index) == "True");
+		} else {
+			complete = (PlayerPrefs.GetString ("achievement" + index) == "True");
+			getReward = (PlayerPrefs.GetString ("achievementGetReward" + index) == "True");
+		}
+	}
+
+	public bool getComplete(){
+		return complete;
+	}
+
+	public bool getGetReward(){
+		return getReward;
 	}
 }
