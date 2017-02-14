@@ -14,7 +14,7 @@ public class myTime : MonoBehaviour {
 
 	public static bool timeStop;
 
-	private const int SEC = 2; // after 5 seconds, 1 month passed.
+	private const int SEC = 10; // after 5 seconds, 1 month passed.
 
 	// Use this for initialization
 	void Start () {
